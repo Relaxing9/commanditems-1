@@ -56,7 +56,8 @@ public class ActionMathExpr extends Action {
     // ====================================================
     public static Expression parse(final String str) {
         return new Object() {
-            int pos = -1, ch;
+            int pos = -1;
+            int ch;
 
             void nextChar() {
                 ch = (++pos < str.length()) ? str.charAt(pos) : -1;
