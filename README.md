@@ -5,8 +5,10 @@ This plugin aims to create items that trigger actions. For more information see 
 ## Compilation
 
 * Clone the repo
+
 * Depending on your system, run the correct gradle wrapper with the shadow task.
 This would look like this under a Unix-like system: `./gradlew shadow`
+
 * Get the artifact from `build/libs/CommandItems-<version>.jar`
 
 ## Usage
