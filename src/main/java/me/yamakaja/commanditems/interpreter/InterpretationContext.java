@@ -45,6 +45,7 @@ public class InterpretationContext {
         }
     }
 
+    /* Never Used
     private static InterpretationStackFrame getFromCache() {
         try {
             cacheLock.lock();
@@ -57,6 +58,7 @@ public class InterpretationContext {
             cacheLock.unlock();
         }
     }
+    */
 
     public CommandItems getPlugin() {
         return plugin;

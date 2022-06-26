@@ -1,11 +1,11 @@
 package me.yamakaja.commanditems.util;
 
+import java.lang.reflect.Field;
+
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
-
-import java.lang.reflect.Field;
 
 public class EnchantmentGlow extends EnchantmentWrapper {
 
@@ -14,7 +14,8 @@ public class EnchantmentGlow extends EnchantmentWrapper {
     public EnchantmentGlow() {
         super("enchantment_glow");
     }
-
+    
+    @SuppressWarnings("deprecation")
     public static Enchantment getGlow() {
         if (glow != null)
             return glow;

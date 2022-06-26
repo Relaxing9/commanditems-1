@@ -1,23 +1,26 @@
 package me.yamakaja.commanditems.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.base.Preconditions;
-import me.yamakaja.commanditems.data.action.Action;
-import me.yamakaja.commanditems.util.EnchantmentGlow;
-import me.yamakaja.commanditems.util.NMSUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.base.Preconditions;
+
+import me.yamakaja.commanditems.data.action.Action;
+import me.yamakaja.commanditems.util.EnchantmentGlow;
+import me.yamakaja.commanditems.util.NMSUtil;
 
 public class ItemDefinition {
 
@@ -49,7 +52,10 @@ public class ItemDefinition {
         public ItemStack build(String key, Map<String, String> params) {
             Preconditions.checkNotNull(this.type, "No material specified!");
 
-            ItemStack stack = new ItemStack(this.type, 1, (short) this.damage);
+            ItemStack stack = new ItemStack(this.type, 1);
+            Damageable newDamage = (Damageable) stack.getItemMeta();
+            newDamage.setDamage(this.damage);
+            stack.setItemMeta((ItemMeta) newDamage);
             ItemMeta meta = stack.getItemMeta();
 
             Preconditions.checkNotNull(meta, "ItemMeta is null! (Material: " + type + ")");
@@ -68,13 +74,7 @@ public class ItemDefinition {
 
             if (this.type == Material.PLAYER_HEAD && skullUser != null && !skullUser.isEmpty()) {
                 SkullMeta skullMeta = (SkullMeta) meta;
-                OfflinePlayer player;
-                try {
-                    UUID uuid = UUID.fromString(this.skullUser);
-                    player = Bukkit.getOfflinePlayer(uuid);
-                } catch (IllegalArgumentException e) {
-                    player = Bukkit.getOfflinePlayer(this.skullUser);
-                }
+                OfflinePlayer player = getSkullMeta(this.skullUser);
 
                 skullMeta.setOwningPlayer(player);
             }
@@ -90,6 +90,16 @@ public class ItemDefinition {
             return stack;
         }
 
+    }
+
+    @SuppressWarnings("deprecation")
+    private static OfflinePlayer getSkullMeta(String skullUser) {
+        try {
+            UUID uuid = UUID.fromString(skullUser);
+            return Bukkit.getOfflinePlayer(uuid);
+        } catch (IllegalArgumentException e) {
+            return Bukkit.getOfflinePlayer(skullUser);
+        }
     }
 
     public static class ExecutionTrace {

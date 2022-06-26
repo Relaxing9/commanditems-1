@@ -1,5 +1,10 @@
 package me.yamakaja.commanditems;
 
+import java.util.stream.Collectors;
+
+import org.bstats.bukkit.Metrics;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
@@ -8,10 +13,6 @@ import me.yamakaja.commanditems.interpreter.ItemExecutor;
 import me.yamakaja.commanditems.parser.ConfigManager;
 import me.yamakaja.commanditems.util.CommandItemsI18N;
 import me.yamakaja.commanditems.util.EnchantmentGlow;
-import org.bstats.bukkit.Metrics;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.stream.Collectors;
 
 /**
  * Created by Yamakaja on 07.06.17.
@@ -22,10 +23,11 @@ public class CommandItems extends JavaPlugin {
     private BukkitCommandManager commandManager;
     private ItemExecutor executor;
     private CommandItemManager commandItemManager;
+    private final int pluginId = 1002;
 
     @Override
     public void onEnable() {
-        new Metrics(this);
+        new Metrics(this, this.pluginId);
 
         boolean debug = System.getProperty("me.yamakaja.debug") != null;
         this.saveResource("config.yml", debug);

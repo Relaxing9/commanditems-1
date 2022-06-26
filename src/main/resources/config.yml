@@ -22,7 +22,7 @@ items:
       - { action: WAIT, duration: 200, actions: [
         { action: COMMAND, by: CONSOLE, command: "fly {player} off" },
         { action: MESSAGE, to: PLAYER, message: "&cFlight has been disabled!" }
-      ] }
+        ] }
   jumper: # This item demonstrates the use of a tool + damage value
     item:
       type: DIAMOND_PICKAXE
@@ -42,7 +42,7 @@ items:
         { action: MATH_EXPR, round: true, target: "YOFF", expr: "YOFF", actions: [
           { action: MESSAGE, to: PLAYER, message: "&aWeeee ... ouch! (Sent you up roughly {YOFF}m)" }
         ] }
-      ] }
+        ] }
   toomanyzombies:
     item:
       type: PLAYER_HEAD
@@ -62,7 +62,7 @@ items:
             { action: COMMAND, by: PLAYER_PRIVILEGED, perm: minecraft.command.summon, command: "summon minecraft:zombie {xoff} ~ {zoff}" }
           ] }
         ] }
-      ] }
+        ] }
   helpstick:
     item:
       type: STICK

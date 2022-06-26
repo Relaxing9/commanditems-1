@@ -1,9 +1,11 @@
 name: CommandItems
 author: Yamakaja
 main: me.yamakaja.commanditems.CommandItems
-version: @version@
+version: ${{version}}
 api-version: "1.15"
-commands:
+api: []
+website: https://www.spigotmc.org/resources/command-items.42556/
+# commands:
 #   cmdi:
 #     description: "CommandItems command"
 #     usage: "/<command> help"

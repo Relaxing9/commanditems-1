@@ -1,13 +1,9 @@
 package me.yamakaja.commanditems;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.CommandHelp;
-import co.aikar.commands.annotation.*;
-import co.aikar.commands.contexts.OnlinePlayer;
-import com.google.common.collect.Maps;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.data.action.ActionMathExpr;
-import me.yamakaja.commanditems.util.NMSUtil;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -15,16 +11,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.common.collect.Maps;
 
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.HelpCommand;
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
+import me.yamakaja.commanditems.data.ItemDefinition;
+import me.yamakaja.commanditems.data.action.ActionMathExpr;
+import me.yamakaja.commanditems.util.NMSUtil;
+
+@CommandAlias("cmdi")
 public class CommandCMDI extends BaseCommand {
 
     private CommandItems plugin;
 
     public CommandCMDI(CommandItems plugin) {
-        super("cmdi");
         this.plugin = plugin;
     }
 
@@ -38,10 +46,9 @@ public class CommandCMDI extends BaseCommand {
     @CommandPermission("cmdi.help")
     @Syntax("[page]")
     @HelpCommand
-    public void onHelp(CommandSender issuer, @Default("1") Integer page) {
-        CommandHelp commandHelp = this.getCommandHelp();
-        commandHelp.setPage(page);
-        commandHelp.showHelp();
+    public void onHelp(@Default("1") Integer page, CommandHelp help) {
+        help.setPage(page);
+        help.showHelp();
     }
 
     @Subcommand("give")

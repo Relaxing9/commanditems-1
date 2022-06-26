@@ -118,7 +118,7 @@ Implements a small expression parser that can be used to evaluate mathematical e
 
 | Parameter | Description                                            | Valid values             | Default value | Required |
 |-----------|--------------------------------------------------------|--------------------------|---------------|----------|
-| expr      | The operation to perform                               | <EXPR>                   |               | true     |
+| expr      | The operation to perform                               | \<EXPR\>                   |               | true     |
 | round     | Round the output to int (1) or leave it as double (1.0)| boolean                  | false         | false    |
 | target    | The variable which the result will be stored in        | Variable name            |               | true     |
 | actions   | Sub actions which can use the result of this operation | An array/list of actions |               | true     |
@@ -134,6 +134,7 @@ You can play with the expression parser using the `/cmdi calc` command, where th
 **Note**: The `/cmdi calc` command cannot deal with spaces in the expression, because it uses spaces to delimit the expression of the context variables which are passed afterwards. This limitation is **NOT** present when specifying expressions in the command item configuration file.
 
 Available variables:
+
 * pi, e
 * Numeric context variables
 
@@ -164,6 +165,7 @@ Available functions:
 | `randn()`    | Standard normal distributed variable |
 
 Available operators are the usual:
+
 * `+`, `-`, `*`, `/`
 * `x^y`: `x` to the power `y`
 * `x%y`: Return the remainder of x divided by y
@@ -197,9 +199,9 @@ When iterating over online players, the following variables are defined:
 #### REPEAT
 
 The repeat action starts a timer that will repeatedly call its sub-actions until the iteration variable has reached its end.
-This is similar to what a for loop does in Java, where i is the iteration variable: 
+This is similar to what a for loop does in Java, where i is the iteration variable:
 
-```
+```java
 for (int i = start; increment > 0 ? i <= to : i >= to; i += increment)
     actions();
 ```
