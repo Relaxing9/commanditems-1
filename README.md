@@ -1,5 +1,7 @@
 # Command Items
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://app.codacy.com/gh/Relaxing9/commanditems?utm_source=github.com&utm_medium=referral&utm_content=Relaxing9/commanditems&utm_campaign=Badge_Grade_Settings)
+
 This plugin aims to create items that trigger actions. For more information see below.
 
 ## Compilation
