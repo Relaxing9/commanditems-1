@@ -10,6 +10,8 @@ import java.util.Map;
 
 public final class CommandItemsI18N {
 
+    private static CommandItemsI18N instance;
+
     public enum MsgKey {
         // Keys with default message
         ITEM_DISABLED("&cThis item has been disabled!"),
@@ -52,8 +54,6 @@ public final class CommandItemsI18N {
     public void reload() {
         this.messagesConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "messages.yml"));
     }
-
-    private static CommandItemsI18N instance;
 
     public static void initialize(CommandItems plugin) {
         instance = new CommandItemsI18N(plugin);

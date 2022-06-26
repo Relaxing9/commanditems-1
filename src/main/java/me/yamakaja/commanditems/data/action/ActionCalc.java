@@ -14,10 +14,6 @@ public class ActionCalc extends Action {
     @JsonProperty(required = true, value = "op")
     private OperationType operationType;
 
-    public ActionCalc() {
-        super(ActionType.CALC);
-    }
-
     @JsonProperty(required = true)
     private String a;
 
@@ -29,6 +25,10 @@ public class ActionCalc extends Action {
 
     @JsonProperty(required = true)
     private Action[] actions;
+
+    public ActionCalc() {
+        super(ActionType.CALC);
+    }
 
     @Override
     public void init() {

@@ -12,10 +12,6 @@ import java.util.List;
  */
 public class ActionRepeat extends Action {
 
-    protected ActionRepeat() {
-        super(ActionType.REPEAT);
-    }
-
     @JsonProperty
     private int period = 20;
 
@@ -36,6 +32,10 @@ public class ActionRepeat extends Action {
 
     @JsonProperty(required = true)
     private Action[] actions;
+
+    protected ActionRepeat() {
+        super(ActionType.REPEAT);
+    }
 
     @Override
     public void trace(List<ItemDefinition.ExecutionTrace> trace, int depth) {
