@@ -64,6 +64,8 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                 case "customModelData":
                     customModelData = p.nextIntValue(0);
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected result: " + p.getCurrentName());
             }
         }
 

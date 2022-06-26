@@ -41,7 +41,7 @@ public class ActionCommand extends Action {
                 line = String.format("PLAYER (with added permission %s): /%s", this.providedPermission, this.command);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + this.commandMode);
+                throw new IllegalStateException("Unexpected trace value: " + this.commandMode);
         }
 
         trace.add(new ItemDefinition.ExecutionTrace(depth, line));
@@ -72,6 +72,9 @@ public class ActionCommand extends Action {
                 }
 
                 break;
+            
+            default:
+                throw new IllegalStateException("Unexpected process value: " + this.commandMode);
         }
     }
 

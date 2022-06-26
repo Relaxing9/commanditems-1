@@ -43,7 +43,7 @@ public class ActionMessage extends Action {
                 line = String.format("To everybody with permission %s: %s", this.permission, this.message);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + this.target);
+                throw new IllegalStateException("Unexpected trace value: " + this.target);
         }
 
         trace.add(new ItemDefinition.ExecutionTrace(depth, line));
@@ -73,6 +73,8 @@ public class ActionMessage extends Action {
                         .filter(player -> player.hasPermission(this.permission))
                         .forEach(player -> player.sendMessage(message));
                 break;
+            default:
+                throw new IllegalStateException("Unexpected process value: " + this.target);
         }
     }
 
