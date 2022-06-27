@@ -19,7 +19,7 @@ body:
           required: true
     - type: textarea
       attributes:
-          label: CommandItems version
+          label: CommandItems Version
           description: Do not say "latest". Output of the "/version CommandItems" command.
       validations:
           required: true

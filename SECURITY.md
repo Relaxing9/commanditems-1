@@ -11,4 +11,4 @@ These versions of CommandItems are only supported in this fork of the original C
 
 ## Reporting a Vulnerability
 
-Make a new [Issue](https://github.com/Relaxing9/commanditems/issues) & it would be reviewed by a code manager.
+Make a new [Issue (Bug Report)](https://github.com/Relaxing9/commanditems/issues/new?assignees=&labels=bug&template=bug_report.yml) & it would be reviewed by a code manager.
