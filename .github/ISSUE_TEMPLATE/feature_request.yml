@@ -1,0 +1,10 @@
+name: Feature Request
+description: Suggest an improvement for this fork
+title: 'Suggestion: '
+labels: [enhancement]
+body:
+    - type: textarea
+      attributes:
+          label: '**Please explain your requested changes to this fork:**'
+      validations:
+          required: true
