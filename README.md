@@ -1,4 +1,4 @@
-# Command Items
+# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.8--1.18.2-green.svg)](https://github.com/Relaxing9/commanditems/releases)
 
 This plugin aims to create items that trigger actions. For more information see below.
 
