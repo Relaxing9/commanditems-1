@@ -24,6 +24,26 @@ import me.yamakaja.commanditems.util.NMSUtil;
 
 public class ItemDefinition {
 
+    private transient String key;
+
+    @JsonProperty
+    private boolean consumed;
+
+    @JsonProperty
+    private long cooldown;
+
+    @JsonProperty
+    private ItemStackBuilder item;
+
+    @JsonProperty
+    private Action[] actions;
+
+    @JsonProperty
+    private boolean sneaking;
+
+    @JsonProperty
+    private Map<String, String> parameters;
+
     public static class ItemStackBuilder {
         @JsonProperty(required = true)
         private Material type;
@@ -112,29 +132,9 @@ public class ItemDefinition {
         }
     }
 
-    private transient String key;
-
     public void setKey(String key) {
         this.key = key;
     }
-
-    @JsonProperty
-    private boolean consumed;
-
-    @JsonProperty
-    private long cooldown;
-
-    @JsonProperty
-    private ItemStackBuilder item;
-
-    @JsonProperty
-    private Action[] actions;
-
-    @JsonProperty
-    private boolean sneaking;
-
-    @JsonProperty
-    private Map<String, String> parameters;
 
     public Map<String, String> getParameters() {
         return this.parameters;

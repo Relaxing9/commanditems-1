@@ -1,6 +1,7 @@
 package me.yamakaja.commanditems.interpreter;
 
 import me.yamakaja.commanditems.CommandItems;
+
 import org.bukkit.entity.Player;
 
 import java.util.ArrayDeque;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
+import java.util.logging.Level;
 
 /**
  * Created by Yamakaja on 26.05.18.
@@ -138,13 +140,15 @@ public class InterpretationContext {
 
             int end = input.indexOf('}', i);
             if (end == -1)
-                throw new RuntimeException("Unterminated curly braces!");
+                CommandItems.logger.log(Level.WARNING,"Unterminated curly braces!");
+                //throw new RuntimeException("Unterminated curly braces!");
 
             String localName = input.substring(i + 1, end);
             String local = this.resolveLocal(localName);
 
             if (local == null)
-                throw new RuntimeException("Attempt to access undefined local '" + localName + "'!");
+                CommandItems.logger.log(Level.SEVERE, ("Attempt to access undefined local '" + localName + "'!"));
+                //throw new RuntimeException("Attempt to access undefined local '" + localName + "'!");
 
             outputBuilder.append(local);
             i = end;

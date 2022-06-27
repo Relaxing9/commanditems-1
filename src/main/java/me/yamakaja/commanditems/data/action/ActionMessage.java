@@ -1,12 +1,15 @@
 package me.yamakaja.commanditems.data.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.interpreter.InterpretationContext;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 import java.util.List;
+import java.util.logging.Level;
 
 public class ActionMessage extends Action {
 
@@ -43,7 +46,7 @@ public class ActionMessage extends Action {
                 line = String.format("To everybody with permission %s: %s", this.permission, this.message);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + this.target);
+                throw new IllegalStateException("Unexpected trace value: " + this.target);
         }
 
         trace.add(new ItemDefinition.ExecutionTrace(depth, line));
@@ -67,12 +70,15 @@ public class ActionMessage extends Action {
 
             case PERMISSION:
                 if (permission == null)
-                    throw new RuntimeException("[CMDI] Permission is null in permission mode!");
+                    CommandItems.logger.log(Level.SEVERE, "[CMDI] Permission is null in permission node!");
+                    //throw new RuntimeException("[CMDI] Permission is null in permission mode!");
 
                 Bukkit.getOnlinePlayers().stream()
                         .filter(player -> player.hasPermission(this.permission))
                         .forEach(player -> player.sendMessage(message));
                 break;
+            default:
+                throw new IllegalStateException("Unexpected process value: " + this.target);
         }
     }
 

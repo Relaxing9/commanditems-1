@@ -1,10 +1,13 @@
 package me.yamakaja.commanditems.data.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.interpreter.InterpretationContext;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class ActionMathExpr extends Action {
 
@@ -21,6 +24,7 @@ public class ActionMathExpr extends Action {
     private Action[] actions;
 
     private transient Expression ast;
+    private static Expression nullValue;
 
     public ActionMathExpr() {
         super(ActionType.MATH_EXPR);
@@ -38,10 +42,12 @@ public class ActionMathExpr extends Action {
     public void init() {
         try {
             this.ast = parse(this.expr);
+            nullValue = ast;
 
             for (Action action : this.actions) action.init();
         } catch (RuntimeException e) {
-            throw new RuntimeException("Failed to parse math expression: ", e);
+            CommandItems.logger.log(Level.SEVERE, "Failed to parse math expression: ", e);
+            //throw new RuntimeException("Failed to parse math expression: ", e);
         }
     }
 
@@ -56,7 +62,8 @@ public class ActionMathExpr extends Action {
     // ====================================================
     public static Expression parse(final String str) {
         return new Object() {
-            int pos = -1, ch;
+            int pos = -1;
+            int ch;
 
             void nextChar() {
                 ch = (++pos < str.length()) ? str.charAt(pos) : -1;
@@ -74,7 +81,9 @@ public class ActionMathExpr extends Action {
             Expression parse() {
                 nextChar();
                 Expression x = parseExpression();
-                if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+                if (pos < str.length())
+                    CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
+                    //throw new RuntimeException("Unexpected: " + (char) ch);
                 return x;
             }
 
@@ -121,7 +130,7 @@ public class ActionMathExpr extends Action {
                     return (params) -> -x.eval(params); // unary minus
                 }
 
-                Expression x;
+                Expression x = nullValue;
                 int startPos = this.pos;
                 if (eat('(')) { // parentheses
                     x = parseExpression();
@@ -238,7 +247,8 @@ public class ActionMathExpr extends Action {
                             case "fmod": {
                                 Expression a = parseExpression();
                                 if (!eat(','))
-                                    throw new RuntimeException("fmod requires two parameters!");
+                                    CommandItems.logger.log(Level.WARNING, "fmod requires two parameters!");
+                                    //throw new RuntimeException("fmod requires two parameters!");
                                 Expression b = parseExpression();
 
                                 x = (params) -> a.eval(params) % b.eval(params);
@@ -260,10 +270,12 @@ public class ActionMathExpr extends Action {
                                 break;
                             }
                             default:
-                                throw new RuntimeException("Unknown function: " + symbolName);
+                                CommandItems.logger.log(Level.SEVERE, ("Unknown function: " + symbolName));
+                                //throw new RuntimeException("Unknown function: " + symbolName);
                         }
                         if (!eat(')'))
-                            throw new RuntimeException("Failed to find closing ')'.");
+                            CommandItems.logger.log(Level.WARNING, "Failed to find closing ')'.");
+                            //throw new RuntimeException("Failed to find closing ')'.");
                     } else {
                         // Variable
                         if ("pi".equals(symbolName))
@@ -274,23 +286,26 @@ public class ActionMathExpr extends Action {
 
                         else x = (params) -> {
                                 if (!params.containsKey(symbolName))
-                                    throw new RuntimeException("Tried to access undefined variable: " + symbolName);
-
+                                    CommandItems.logger.log(Level.SEVERE, ("Tried to access undefined variable: " + symbolName));
+                                    //throw new RuntimeException("Tried to access undefined variable: " + symbolName);
+                                
                                 return params.get(symbolName);
                             };
                     }
                 } else {
-                    throw new RuntimeException("Unexpected: " + (char) ch);
+                    CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
+                    //throw new RuntimeException("Unexpected: " + (char) ch);
                 }
 
+                final Expression x1 = x;
                 if (eat('^')) {
                     Expression p = parseFactor();
-                    return (params) -> Math.pow(x.eval(params), p.eval(params)); // exponentiation
+                    return (params) -> Math.pow(x1.eval(params), p.eval(params)); // exponentiation
                 }
 
                 if (eat('%')) {
                     Expression m = parseFactor();
-                    return (params) -> x.eval(params) % m.eval(params); // fmod
+                    return (params) -> x1.eval(params) % m.eval(params); // fmod
                 }
 
                 return x;

@@ -31,7 +31,8 @@ public class CommandItemManager implements Listener {
         this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
     }
 
-    private static String getTimeString(long duration) {
+    private static String getTimeString(long d) {
+        long duration = d;
         int seconds = (int) (duration % 60);
         duration /= 60;
         int minutes = (int) (duration % 60);

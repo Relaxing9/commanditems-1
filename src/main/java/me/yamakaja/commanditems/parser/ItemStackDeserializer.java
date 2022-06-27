@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.google.common.base.Preconditions;
+
+import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.util.EnchantmentGlow;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
@@ -39,7 +42,8 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                     try {
                         material = Material.valueOf(p.nextTextValue());
                     } catch (IllegalArgumentException e) {
-                        throw new RuntimeException("Invalid material type!", e);
+                        CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
+                        //throw new RuntimeException("Invalid material type!", e);
                     }
                     break;
                 case "name":
@@ -64,6 +68,8 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                 case "customModelData":
                     customModelData = p.nextIntValue(0);
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected result: " + p.getCurrentName());
             }
         }
 

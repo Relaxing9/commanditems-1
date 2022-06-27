@@ -38,6 +38,7 @@ public abstract class Action {
     public abstract void process(InterpretationContext context);
 
     public void init() {
+        // This is used in other Action Commands
     }
 
     public abstract void trace(List<ItemDefinition.ExecutionTrace> trace, int depth);

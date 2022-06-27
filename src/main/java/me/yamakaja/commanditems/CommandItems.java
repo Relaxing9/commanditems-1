@@ -1,5 +1,6 @@
 package me.yamakaja.commanditems;
 
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.bstats.bukkit.Metrics;
@@ -23,6 +24,7 @@ public class CommandItems extends JavaPlugin {
     private BukkitCommandManager commandManager;
     private ItemExecutor executor;
     private CommandItemManager commandItemManager;
+    public static final Logger logger = Logger.getLogger("CommandItems");
     private final int pluginId = 1002;
 
     @Override
