@@ -2,7 +2,6 @@ package me.yamakaja.commanditems.interpreter;
 
 import me.yamakaja.commanditems.CommandItems;
 
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayDeque;

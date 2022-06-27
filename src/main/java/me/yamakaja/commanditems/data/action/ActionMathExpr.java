@@ -9,8 +9,6 @@ import me.yamakaja.commanditems.interpreter.InterpretationContext;
 import java.util.*;
 import java.util.logging.Level;
 
-import org.bukkit.command.Command;
-
 public class ActionMathExpr extends Action {
 
     @JsonProperty(required = true)
