@@ -1,4 +1,4 @@
-# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.13--1.18.2-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge]()](https://app.codacy.com/gh/Relaxing9/commanditems?utm_source=github.com&utm_medium=referral&utm_content=Relaxing9/commanditems&utm_campaign=Badge_Grade_Settings)
+# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.13--1.18.2-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://github.com/Relaxing9/commanditems?utm_source=github.com&utm_medium=referral&utm_content=Relaxing9/commanditems&utm_campaign=Badge_Grade_Settings)
 
 This plugin aims to create items that trigger actions. For more information see below.
 
