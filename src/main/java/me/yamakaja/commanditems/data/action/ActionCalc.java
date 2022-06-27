@@ -1,10 +1,13 @@
 package me.yamakaja.commanditems.data.action;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.interpreter.InterpretationContext;
 
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by Yamakaja on 27.05.18.
@@ -59,7 +62,8 @@ public class ActionCalc extends Action {
 
             context.popFrame();
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Parsing numbers failed!", e);
+            CommandItems.logger.log(Level.SEVERE, "Parsing numbers failed: ", e);
+            //throw new RuntimeException("Parsing numbers failed!", e);
         }
     }
 

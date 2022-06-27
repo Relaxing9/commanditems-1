@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 /**
@@ -84,15 +85,19 @@ public class NMSUtil {
         } catch (ClassNotFoundException ignored) {
         }
 
-        throw new RuntimeException("Couldn't find NMS class: " + oldName  + " / " + newName);
+        CommandItems.logger.log(Level.SEVERE, ("Couldn't find NMS class: " + oldName + " / " + newName));
+        //throw new RuntimeException("Couldn't find NMS class: " + oldName  + " / " + newName);
+        return null;
     }
 
     public static Class<?> getOBCClass(String name) {
         try {
             return Class.forName("org.bukkit.craftbukkit." + nmsVersion + "." + name);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Coudln't find OBC class: " + nmsVersion, e);
+            CommandItems.logger.log(Level.SEVERE, ("Couldn't find OBC class: " + nmsVersion), e);
+            //throw new RuntimeException("Coudln't find OBC class: " + nmsVersion, e);
         }
+        return null;
     }
 
     public static String getNMSVersion() {
@@ -163,7 +168,8 @@ public class NMSUtil {
             Object cmdiTag = getCMDITag(meta, true);
 
             if (cmdiTag == null)
-                throw new RuntimeException("cmdi tag doesn't exist yet!");
+                CommandItems.logger.log(Level.WARNING, "cmdi tag doesn't exist yet!");
+                //throw new RuntimeException("cmdi tag doesn't exist yet!");
 
             Object mapTag = nbtTagCompound.newInstance();
             for (Map.Entry<String, String> entry : entries.entrySet())

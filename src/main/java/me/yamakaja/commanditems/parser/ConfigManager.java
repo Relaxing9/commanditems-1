@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Created by Yamakaja on 26.05.18.
@@ -36,7 +37,8 @@ public class ConfigManager {
         try {
             this.config = mapper.readValue(new File(plugin.getDataFolder(), "config.yml"), CommandItemsConfig.class);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read config!", e);
+            CommandItems.logger.log(Level.SEVERE, "Failed to read config!", e);
+            //throw new RuntimeException("Failed to read config!", e);
         }
 
         for (Map.Entry<String, ItemDefinition> entry : this.config.getItems().entrySet()) {
