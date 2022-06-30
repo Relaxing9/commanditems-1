@@ -47,21 +47,6 @@ public class InterpretationContext {
         }
     }
 
-    /* Never Used
-    private static InterpretationStackFrame getFromCache() {
-        try {
-            cacheLock.lock();
-
-            if (stackFrameCache.size() > 0)
-                return stackFrameCache.pop();
-
-            return new InterpretationStackFrame();
-        } finally {
-            cacheLock.unlock();
-        }
-    }
-    */
-
     public CommandItems getPlugin() {
         return plugin;
     }
@@ -141,14 +126,12 @@ public class InterpretationContext {
             int end = input.indexOf('}', i);
             if (end == -1)
                 CommandItems.logger.log(Level.WARNING,"Unterminated curly braces!");
-                //throw new RuntimeException("Unterminated curly braces!");
 
             String localName = input.substring(i + 1, end);
             String local = this.resolveLocal(localName);
 
             if (local == null)
                 CommandItems.logger.log(Level.SEVERE, ("Attempt to access undefined local '" + localName + "'!"));
-                //throw new RuntimeException("Attempt to access undefined local '" + localName + "'!");
 
             outputBuilder.append(local);
             i = end;

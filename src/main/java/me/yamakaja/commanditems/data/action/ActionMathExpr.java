@@ -47,8 +47,7 @@ public class ActionMathExpr extends Action {
             for (Action action : this.actions) action.init();
         } catch (RuntimeException e) {
             CommandItems.logger.log(Level.SEVERE, "Failed to parse math expression: ", e);
-            //throw new RuntimeException("Failed to parse math expression: ", e);
-        }
+          }
     }
 
     @FunctionalInterface
@@ -83,7 +82,6 @@ public class ActionMathExpr extends Action {
                 Expression x = parseExpression();
                 if (pos < str.length())
                     CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
-                    //throw new RuntimeException("Unexpected: " + (char) ch);
                 return x;
             }
 
@@ -248,7 +246,6 @@ public class ActionMathExpr extends Action {
                                 Expression a = parseExpression();
                                 if (!eat(','))
                                     CommandItems.logger.log(Level.WARNING, "fmod requires two parameters!");
-                                    //throw new RuntimeException("fmod requires two parameters!");
                                 Expression b = parseExpression();
 
                                 x = (params) -> a.eval(params) % b.eval(params);
@@ -271,11 +268,9 @@ public class ActionMathExpr extends Action {
                             }
                             default:
                                 CommandItems.logger.log(Level.SEVERE, ("Unknown function: " + symbolName));
-                                //throw new RuntimeException("Unknown function: " + symbolName);
                         }
                         if (!eat(')'))
                             CommandItems.logger.log(Level.WARNING, "Failed to find closing ')'.");
-                            //throw new RuntimeException("Failed to find closing ')'.");
                     } else {
                         // Variable
                         if ("pi".equals(symbolName))
@@ -287,14 +282,12 @@ public class ActionMathExpr extends Action {
                         else x = (params) -> {
                                 if (!params.containsKey(symbolName))
                                     CommandItems.logger.log(Level.SEVERE, ("Tried to access undefined variable: " + symbolName));
-                                    //throw new RuntimeException("Tried to access undefined variable: " + symbolName);
                                 
                                 return params.get(symbolName);
                             };
                     }
                 } else {
                     CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
-                    //throw new RuntimeException("Unexpected: " + (char) ch);
                 }
 
                 final Expression x1 = x;

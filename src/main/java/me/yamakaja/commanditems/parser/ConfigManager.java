@@ -38,7 +38,6 @@ public class ConfigManager {
             this.config = mapper.readValue(new File(plugin.getDataFolder(), "config.yml"), CommandItemsConfig.class);
         } catch (IOException e) {
             CommandItems.logger.log(Level.SEVERE, "Failed to read config!", e);
-            //throw new RuntimeException("Failed to read config!", e);
         }
 
         for (Map.Entry<String, ItemDefinition> entry : this.config.getItems().entrySet()) {

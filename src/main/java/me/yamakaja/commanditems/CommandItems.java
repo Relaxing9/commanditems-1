@@ -25,11 +25,10 @@ public class CommandItems extends JavaPlugin {
     private ItemExecutor executor;
     private CommandItemManager commandItemManager;
     public static final Logger logger = Logger.getLogger("CommandItems");
-    private final int pluginId = 1002;
 
     @Override
     public void onEnable() {
-        new Metrics(this, this.pluginId);
+        new Metrics(this, 1002);
 
         boolean debug = System.getProperty("me.yamakaja.debug") != null;
         this.saveResource("config.yml", debug);

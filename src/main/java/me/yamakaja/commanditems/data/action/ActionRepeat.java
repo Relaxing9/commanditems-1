@@ -63,23 +63,18 @@ public class ActionRepeat extends Action {
     public void init() {
         if (counterVar.isEmpty())
             CommandItems.logger.log(Level.WARNING, "Empty counter variable name in REPEAT!");
-            //throw new RuntimeException("Empty counter variable name in REPEAT!");
 
         if (period < 0)
             CommandItems.logger.log(Level.WARNING, "Negative period in REPEAT!");
-            //throw new RuntimeException("Negative period in REPEAT!");
 
         if (delay < 0)
             CommandItems.logger.log(Level.WARNING, "Negative delay in REPEAT!");
-            //throw new RuntimeException("Negative delay in REPEAT!");
 
         if (increment == 0)
             CommandItems.logger.log(Level.WARNING, "Increment is 0, infinite loops are not supported by REPEAT!");
-            //throw new RuntimeException("Increment is 0, infinite loops are not supported by REPEAT!");
 
         if (Math.signum((double) to - from) * increment < 0)
             CommandItems.logger.log(Level.WARNING, "Increment is of the wrong sign in REPEAT!");
-            //throw new RuntimeException("Increment is of the wrong sign in REPEAT!");
 
         for (Action action : this.actions) action.init();
     }

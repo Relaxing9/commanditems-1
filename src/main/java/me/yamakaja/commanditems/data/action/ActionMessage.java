@@ -71,7 +71,6 @@ public class ActionMessage extends Action {
             case PERMISSION:
                 if (permission == null)
                     CommandItems.logger.log(Level.SEVERE, "[CMDI] Permission is null in permission node!");
-                    //throw new RuntimeException("[CMDI] Permission is null in permission mode!");
 
                 Bukkit.getOnlinePlayers().stream()
                         .filter(player -> player.hasPermission(this.permission))

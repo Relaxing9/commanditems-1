@@ -43,7 +43,6 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                         material = Material.valueOf(p.nextTextValue());
                     } catch (IllegalArgumentException e) {
                         CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
-                        //throw new RuntimeException("Invalid material type!", e);
                     }
                     break;
                 case "name":

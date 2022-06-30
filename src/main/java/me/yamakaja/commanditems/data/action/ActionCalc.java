@@ -63,7 +63,6 @@ public class ActionCalc extends Action {
             context.popFrame();
         } catch (NumberFormatException e) {
             CommandItems.logger.log(Level.SEVERE, "Parsing numbers failed: ", e);
-            //throw new RuntimeException("Parsing numbers failed!", e);
         }
     }
 
