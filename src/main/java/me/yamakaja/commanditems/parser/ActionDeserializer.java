@@ -15,11 +15,8 @@ import java.io.IOException;
  */
 public class ActionDeserializer extends StdDeserializer<Action> {
 
-    private CommandItems plugin;
-
     public ActionDeserializer(CommandItems plugin) {
         super(Action.class);
-        this.plugin = plugin;
     }
 
     @Override

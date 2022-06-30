@@ -9,11 +9,8 @@ import org.yaml.snakeyaml.constructor.Constructor;
  */
 public class ActionConstructor extends Constructor {
 
-    private CommandItems plugin;
-
     public ActionConstructor(CommandItems plugin) {
         super(Action.class);
-        this.plugin = plugin;
     }
 
 

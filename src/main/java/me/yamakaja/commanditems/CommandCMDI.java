@@ -3,7 +3,7 @@ package me.yamakaja.commanditems;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
-import co.aikar.commands.contexts.OnlinePlayer;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -14,29 +14,28 @@ import java.util.Map;
 /**
  * Created by Yamakaja on 26.05.18.
  */
+@CommandAlias("cmdi")
 public class CommandCMDI extends BaseCommand {
 
     private CommandItems plugin;
 
     public CommandCMDI(CommandItems plugin) {
-        super("cmdi");
         this.plugin = plugin;
     }
 
     @Default
     public void onDefault(CommandSender issuer) {
         issuer.sendMessage(ChatColor.AQUA + "Running " + ChatColor.GOLD + "CommandItems v" + this.plugin.getDescription().getVersion()
-                + ChatColor.AQUA + " by " + ChatColor.GOLD + "Yamakaja" + ChatColor.AQUA + "!");
+                + ChatColor.AQUA + " by " + ChatColor.GOLD + "Yamakaja"+ ChatColor.AQUA + " & " + ChatColor.GOLD + "Relaxing9" + ChatColor.AQUA + "!");
         issuer.sendMessage(ChatColor.AQUA + "See " + ChatColor.GOLD + "/cmdi help" + ChatColor.AQUA + " for more information!");
     }
 
     @CommandPermission("cmdi.help")
     @Syntax("[page]")
     @HelpCommand
-    public void onHelp(CommandSender issuer, @Default("1") Integer page) {
-        CommandHelp commandHelp = this.getCommandHelp();
-        commandHelp.setPage(page);
-        commandHelp.showHelp();
+    public void onHelp(@Default("1") Integer page, CommandHelp help) {
+        help.setPage(page);
+        help.showHelp();
     }
 
     @Subcommand("give")

@@ -1,8 +1,9 @@
 name: CommandItems
+api: []
 author: Yamakaja
 main: me.yamakaja.commanditems.CommandItems
-version: @version@
-commands:
+version: ${{version}}
+#commands:
 #   cmdi:
 #     description: "CommandItems command"
 #     usage: "/<command> help"

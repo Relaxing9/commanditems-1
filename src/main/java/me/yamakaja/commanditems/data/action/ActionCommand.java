@@ -48,6 +48,9 @@ public class ActionCommand extends Action {
                 }
 
                 break;
+            
+            default:
+                throw new IllegalStateException("Unexpected process value: " + this.commandMode);
         }
     }
 

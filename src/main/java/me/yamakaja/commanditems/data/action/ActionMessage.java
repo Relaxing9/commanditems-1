@@ -49,6 +49,8 @@ public class ActionMessage extends Action {
                         .filter(player -> player.hasPermission(this.permission))
                         .forEach(player -> player.sendMessage(message));
                 break;
+            default:
+                throw new IllegalStateException("Unexpected process value: " + this.target);
         }
     }
 
