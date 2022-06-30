@@ -10,6 +10,7 @@ out/
 # Gradle
 .gradle/
 build/
+bin/
 
 # Test environment
 testenv/

@@ -10,6 +10,7 @@ import me.yamakaja.commanditems.util.EnchantmentGlow;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
@@ -66,12 +67,19 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                 case "unbreakable":
                     unbreakable = p.nextBooleanValue();
                     break;
+                default:
+                    throw new IllegalStateException("Unexpected result: " + p.getCurrentName());
             }
         }
 
         Preconditions.checkNotNull(material, "No material specified!");
 
         ItemStack stack = new ItemStack(material, 1, damage, data);
+
+        // Damageable newDamage = (Damageable) stack.getItemMeta();
+        // newDamage.setDamage(damage);
+        // stack.setItemMeta((ItemMeta) newDamage);
+
         ItemMeta meta = stack.getItemMeta();
 
         stack.setDurability(damage);
