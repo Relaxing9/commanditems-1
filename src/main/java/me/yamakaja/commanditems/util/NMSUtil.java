@@ -86,7 +86,6 @@ public class NMSUtil {
         }
 
         CommandItems.logger.log(Level.SEVERE, ("Couldn't find NMS class: " + oldName + " / " + newName));
-        //throw new RuntimeException("Couldn't find NMS class: " + oldName  + " / " + newName);
         return null;
     }
 
@@ -95,7 +94,6 @@ public class NMSUtil {
             return Class.forName("org.bukkit.craftbukkit." + nmsVersion + "." + name);
         } catch (ClassNotFoundException e) {
             CommandItems.logger.log(Level.SEVERE, ("Couldn't find OBC class: " + nmsVersion), e);
-            //throw new RuntimeException("Coudln't find OBC class: " + nmsVersion, e);
         }
         return null;
     }
@@ -104,6 +102,7 @@ public class NMSUtil {
         return Bukkit.getServer().getClass().getPackage().getName().split(Pattern.quote("."))[3];
     }
 
+    @SuppressWarnings("unchecked")
     private static Object getCMDITag(ItemMeta meta, boolean create) throws IllegalAccessException, InstantiationException {
         Map<String, Object> unhandledTags = (Map<String, Object>) unhandledTagsField.get(meta);
         Object cmdiTag = unhandledTags.get(NBT_KEY);
@@ -140,6 +139,7 @@ public class NMSUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static Map<String, String> getNBTStringMap(ItemMeta meta, String key) {
         try {
             Object cmdiTag = getCMDITag(meta, false);
@@ -169,7 +169,6 @@ public class NMSUtil {
 
             if (cmdiTag == null)
                 CommandItems.logger.log(Level.WARNING, "cmdi tag doesn't exist yet!");
-                //throw new RuntimeException("cmdi tag doesn't exist yet!");
 
             Object mapTag = nbtTagCompound.newInstance();
             for (Map.Entry<String, String> entry : entries.entrySet())
