@@ -21,7 +21,6 @@ import me.yamakaja.commanditems.util.EnchantmentGlow;
 public class CommandItems extends JavaPlugin {
 
     private ConfigManager configManager;
-    private BukkitCommandManager commandManager;
     private ItemExecutor executor;
     private CommandItemManager commandItemManager;
     public static final Logger logger = Logger.getLogger("CommandItems");
@@ -39,9 +38,9 @@ public class CommandItems extends JavaPlugin {
         this.configManager = new ConfigManager(this);
         configManager.parse();
 
-        this.commandManager = new PaperCommandManager(this);
+        BukkitCommandManager commandManager = new PaperCommandManager(this);
 
-        this.commandManager.getCommandContexts().registerContext(ItemDefinition.class, context -> {
+        commandManager.getCommandContexts().registerContext(ItemDefinition.class, context -> {
             ItemDefinition itemDef = this.configManager.getConfig().getItems().get(context.popFirstArg());
 
             if (itemDef == null)
@@ -50,12 +49,12 @@ public class CommandItems extends JavaPlugin {
             return itemDef;
         });
 
-        this.commandManager.getCommandCompletions().registerCompletion("itemdefs",
+        commandManager.getCommandCompletions().registerCompletion("itemdefs",
                 context -> this.configManager.getConfig().getItems().keySet().stream()
                         .filter(key -> key.toLowerCase().startsWith(context.getInput().toLowerCase()))
                         .collect(Collectors.toList()));
 
-        this.commandManager.getCommandCompletions().registerCompletion("itemparams", context -> {
+        commandManager.getCommandCompletions().registerCompletion("itemparams", context -> {
             ItemDefinition itemDefinition = context.getContextValue(ItemDefinition.class);
             return itemDefinition.getParameters().entrySet().stream()
                     .filter(x -> x.getKey().toLowerCase().startsWith(context.getInput()))
@@ -64,8 +63,8 @@ public class CommandItems extends JavaPlugin {
 
         });
 
-        this.commandManager.registerCommand(new CommandCMDI(this));
-        this.commandManager.enableUnstableAPI("help");
+        commandManager.registerCommand(new CommandCMDI(this));
+        commandManager.enableUnstableAPI("help");
 
         this.executor = new ItemExecutor(this);
         this.commandItemManager = new CommandItemManager(this);
