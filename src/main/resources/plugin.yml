@@ -1,23 +1,48 @@
 name: CommandItems
 authors: [Yamakaja, Relaxing9]
 main: me.yamakaja.commanditems.CommandItems
-version: ${{version}}
+version: ${version}
 api-version: "1.15"
 api: []
 # commands:
-#   cmdi:
-#     description: "CommandItems command"
-#     usage: "/<command> help"
+#   give:
+#     description: "Gives an online player a CommandItem"
+#     usage: "/<command> [player] [item] [amount] <KEY=VAL>"
+#   help:
+#     description: "Views a list of available commands"
+#     usage: "/<command> [page]"
+#   inspect:
+#     description: "View details of held CommandItem"
+#     usage: "/<command>"
+#   math:
+#     description: "Enumerates mathematical expressions"
+#     usage: "/<command> <expression> [<VAR>=<VAL>]"
+#     aliases: [calc]
+#   reload:
+#     description: "Reload plugin configuration"
+#     usage: "/<command>"
 # permissions:
-#   commanditems.*:
-#     description: "Gives access to all commanditems permissions"
-#     children:
-#       commanditems.reload: true
-#       commanditems.addcommand: true
-#       commanditems.msg: true
-#   commanditems.reload:
+#   cmdi.give:
+#     default: false
+#     description: "Gives permission to use the give command"
+#   cmdi.help:
+#     default: false
+#     description: "Gives permission to use the help command"
+#   cmdi.inspect:
+#     default: false
+#     description: "Gives permission to inspect a CommandItem"
+#   cmdi.math:
+#     default: false
+#     description: "Enumerates a mathematical expression"
+#   cmdi.reload:
+#     default: false
 #     description: "Gives permission to reload the plugin"
-#   commanditems.addcommand:
-#     description: "Gives permission to add predefined commands to items"
-#   commanditems.msg:
-#     description: "Sends a raw message"
+#   cmdi.*:
+#     default: op
+#     description: "Gives access to all CommandItems commands"
+#     children:
+#       cmdi.give: true
+#       cmdi.help: true
+#       cmdi.inspect: true
+#       cmdi.math: true
+#       cmdi.reload: true
