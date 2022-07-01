@@ -6,8 +6,6 @@ import com.google.common.collect.Table;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.util.CommandItemsI18N.MsgKey;
 import me.yamakaja.commanditems.util.NMSUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,10 +16,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class CommandItemManager implements Listener {
 
     private CommandItems plugin;
+    private int iterator = 0;
 
     private Table<UUID, String, Long> lastUse = HashBasedTable.create();
 
@@ -104,15 +104,9 @@ public class CommandItemManager implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
             return;
 
-        if (event.getItem() == null)
-            return;
-
         ItemMeta itemMeta = event.getItem().getItemMeta();
-        if (itemMeta == null)
-            return;
-
         String command = NMSUtil.getNBTString(itemMeta, "command");
-        if (command == null)
+        if (event.getItem() == null || itemMeta == null || command == null)
             return;
 
         ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
@@ -133,7 +127,8 @@ public class CommandItemManager implements Listener {
         if (!checkCooldown(event.getPlayer(), command, itemDefinition.getCooldown())) {
             Map<String, String> params = Maps.newHashMap();
             params.put("TIME_PERIOD", getTimeString(itemDefinition.getCooldown()));
-            params.put("TIME_REMAINING", getTimeString(getSecondsUntilNextUse(event.getPlayer(), command, itemDefinition.getCooldown())));
+            params.put("TIME_REMAINING",
+                    getTimeString(getSecondsUntilNextUse(event.getPlayer(), command, itemDefinition.getCooldown())));
 
             event.getPlayer().sendMessage(MsgKey.ITEM_COOLDOWN.get(params));
             return;
@@ -142,27 +137,36 @@ public class CommandItemManager implements Listener {
         Map<String, String> params = NMSUtil.getNBTStringMap(itemMeta, "params");
 
         if (itemDefinition.isConsumed()) {
-            ItemStack[] contents = event.getPlayer().getInventory().getContents();
-            for (int i = 0; i < contents.length; i++)
-                if (contents[i] != null && contents[i].isSimilar(event.getItem())) {
-                    int amount = contents[i].getAmount();
-                    if (amount == 1)
-                        contents[i] = null;
-                    else
-                        contents[i].setAmount(amount - 1);
-
-                    event.getPlayer().getInventory().setItem(i, contents[i]);
-                    break;
-                }
+            ItemStack contents = runConsume(event);
+            event.getPlayer().getInventory().setItem(getIter(), contents);
         }
 
         try {
             this.plugin.getExecutor().processInteraction(event.getPlayer(), itemDefinition, params);
         } catch (RuntimeException e) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Failed to process command item: " + command);
+            CommandItems.logger.log(Level.SEVERE, "Failed to process command item: " + command);
             event.getPlayer().sendMessage(MsgKey.ITEM_ERROR.get());
             e.printStackTrace();
         }
     }
+
+    public ItemStack runConsume(PlayerInteractEvent event) {
+        ItemStack[] contents = event.getPlayer().getInventory().getContents();
+        int i;
+        for (i = 0; i < contents.length; i++)
+            if (contents[i] != null && contents[i].isSimilar(event.getItem())) {
+                int amount = contents[i].getAmount();
+                if (amount == 1)
+                    contents[i] = null;
+                else
+                    contents[i].setAmount(amount - 1);
+                break;
+            }
+        setIter(i);
+        return contents[i];
+    }
+
+    public void setIter(int i) { this.iterator = i; }
+    public int getIter() { return this.iterator; }
 
 }
