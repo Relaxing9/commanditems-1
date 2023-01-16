@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Yamakaja on 23.06.17.
  */
-@SuppressWarnings({"setAccessible", "deprecation"})
+@SuppressWarnings("setAccessible")
 public class NMSUtil {
 
     private static final String NBT_KEY = "cmdi";
@@ -106,7 +106,7 @@ public class NMSUtil {
         return Bukkit.getServer().getClass().getPackage().getName().split(Pattern.quote("."))[3];
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "deprecation"})
     private static Object getCMDITag(ItemMeta meta, boolean create) throws IllegalAccessException, InstantiationException {
         Map<String, Object> unhandledTags = (Map<String, Object>) unhandledTagsField.get(meta);
         Object cmdiTag = unhandledTags.get(NBT_KEY);
@@ -167,6 +167,7 @@ public class NMSUtil {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public static void setNBTStringMap(ItemMeta meta, String key, Map<String, String> entries) {
         try {
             Object cmdiTag = getCMDITag(meta, true);
