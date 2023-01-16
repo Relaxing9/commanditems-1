@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Yamakaja on 23.06.17.
  */
-@SuppressWarnings("setAccessible")
+@SuppressWarnings({"setAccessible", "deprecation"})
 public class NMSUtil {
 
     private static final String NBT_KEY = "cmdi";
