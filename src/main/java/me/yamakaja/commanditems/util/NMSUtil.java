@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Yamakaja on 23.06.17.
  */
+@SuppressWarnings("setAccessible")
 public class NMSUtil {
 
     private static final String NBT_KEY = "cmdi";
@@ -63,6 +65,8 @@ public class NMSUtil {
                 unhandledTagsField = craftMetaItemClass.getDeclaredField("unhandledTags");
                 unhandledTagsField.setAccessible(true);
             }
+        } catch (InaccessibleObjectException e) {
+            CommandItems.logger.log(Level.SEVERE, "Could not access the unhandled tags", e);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
