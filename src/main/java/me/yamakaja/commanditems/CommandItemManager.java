@@ -104,47 +104,46 @@ public class CommandItemManager implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-
+    
         ItemMeta itemMeta = event.getItem().getItemMeta();
         String command = NMSUtil.getNBTString(itemMeta, "command");
         if (event.getItem() == null || itemMeta == null || command == null) {
             return;
         }
-
+    
         ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
         if (itemDefinition == null) {
             event.getPlayer().sendMessage(MsgKey.ITEM_DISABLED.get());
             return;
         }
-
+    
         event.setCancelled(true);
-
+    
         if (itemDefinition.isSneaking() && !event.getPlayer().isSneaking()) {
             return;
         }
-
+    
         if (!event.getPlayer().hasPermission("cmdi.item." + command)) {
             event.getPlayer().sendMessage(MsgKey.ITEM_NOPERMISSION.get());
             return;
         }
-
+    
         if (!checkCooldown(event.getPlayer(), command, itemDefinition.getCooldown())) {
             Map<String, String> params = Maps.newHashMap();
             params.put("TIME_PERIOD", getTimeString(itemDefinition.getCooldown()));
-            params.put("TIME_REMAINING",
-                    getTimeString(getSecondsUntilNextUse(event.getPlayer(), command, itemDefinition.getCooldown())));
-
+            params.put("TIME_REMAINING", getTimeString(getSecondsUntilNextUse(event.getPlayer(), command, itemDefinition.getCooldown())));
+    
             event.getPlayer().sendMessage(MsgKey.ITEM_COOLDOWN.get(params));
             return;
         }
-
+    
         Map<String, String> params = NMSUtil.getNBTStringMap(itemMeta, "params");
-
+    
         if (itemDefinition.isConsumed()) {
             ItemStack contents = runConsume(event);
             event.getPlayer().getInventory().setItem(getIter(), contents);
         }
-
+    
         try {
             this.plugin.getExecutor().processInteraction(event.getPlayer(), itemDefinition, params);
         } catch (RuntimeException e) {
@@ -153,6 +152,7 @@ public class CommandItemManager implements Listener {
             e.printStackTrace();
         }
     }
+    
 
     public ItemStack runConsume(PlayerInteractEvent event) {
         ItemStack[] contents = event.getPlayer().getInventory().getContents();
