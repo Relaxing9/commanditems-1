@@ -51,8 +51,9 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
                 case "lore":
                     p.nextToken();
                     String[] loreArray = p.readValueAs(String[].class);
-                    for (int i = 0; i < loreArray.length; i++)
+                    for (int i = 0; i < loreArray.length; i++) {
                         loreArray[i] = ChatColor.translateAlternateColorCodes('&', loreArray[i]);
+                    }
                     lore = Arrays.asList(loreArray);
                     break;
                 case "glow":
