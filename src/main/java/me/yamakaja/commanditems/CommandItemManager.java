@@ -101,10 +101,10 @@ public class CommandItemManager implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+        if (!isValidInteraction(event)) {
             return;
         }
-    
+
         ItemMeta itemMeta = event.getItem().getItemMeta();
         String command = NMSUtil.getNBTString(itemMeta, "command");
         if (event.getItem() == null || itemMeta == null || command == null) {
@@ -112,32 +112,13 @@ public class CommandItemManager implements Listener {
         }
     
         ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
-        if (itemDefinition == null) {
-            event.getPlayer().sendMessage(MsgKey.ITEM_DISABLED.get());
-            return;
-        }
-    
         event.setCancelled(true);
     
-        if (itemDefinition.isSneaking() && !event.getPlayer().isSneaking()) {
+        if (!isValidPlayer(event.getPlayer(), itemDefinition, command)) {
             return;
         }
     
-        if (!event.getPlayer().hasPermission("cmdi.item." + command)) {
-            event.getPlayer().sendMessage(MsgKey.ITEM_NOPERMISSION.get());
-            return;
-        }
-    
-        if (!checkCooldown(event.getPlayer(), command, itemDefinition.getCooldown())) {
-            Map<String, String> params = Maps.newHashMap();
-            params.put("TIME_PERIOD", getTimeString(itemDefinition.getCooldown()));
-            params.put("TIME_REMAINING", getTimeString(getSecondsUntilNextUse(event.getPlayer(), command, itemDefinition.getCooldown())));
-    
-            event.getPlayer().sendMessage(MsgKey.ITEM_COOLDOWN.get(params));
-            return;
-        }
-    
-        Map<String, String> params = NMSUtil.getNBTStringMap(itemMeta, "params");
+        Map<String, String> params = NMSUtil.getNBTStringMap(event.getItem().getItemMeta(), "params");
     
         if (itemDefinition.isConsumed()) {
             ItemStack contents = runConsume(event);
@@ -151,6 +132,35 @@ public class CommandItemManager implements Listener {
             event.getPlayer().sendMessage(MsgKey.ITEM_ERROR.get());
             e.printStackTrace();
         }
+    }
+    
+    private boolean isValidInteraction(PlayerInteractEvent event) {
+        return event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK;
+    }
+    
+    private boolean isValidPlayer(Player player, ItemDefinition itemDefinition, String command) {
+        if (itemDefinition == null) {
+            player.sendMessage(MsgKey.ITEM_DISABLED.get());
+            return false;
+        }
+    
+        if (itemDefinition.isSneaking() && !player.isSneaking()) {
+            return false;
+        }
+    
+        if (!player.hasPermission("cmdi.item." + command)) {
+            player.sendMessage(MsgKey.ITEM_NOPERMISSION.get());
+            return false;
+        }
+    
+        if (!checkCooldown(player, command, itemDefinition.getCooldown())) {
+            Map<String, String> params = Maps.newHashMap();
+            params.put("TIME_PERIOD", getTimeString(itemDefinition.getCooldown()));
+            params.put("TIME_REMAINING", getTimeString(getSecondsUntilNextUse(player, command, itemDefinition.getCooldown())));
+            player.sendMessage(MsgKey.ITEM_COOLDOWN.get(params));
+            return false;
+        }
+        return true;
     }
 
     public ItemStack runConsume(PlayerInteractEvent event) {
