@@ -101,13 +101,15 @@ public class CommandItemManager implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)
+        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
+        }
 
         ItemMeta itemMeta = event.getItem().getItemMeta();
         String command = NMSUtil.getNBTString(itemMeta, "command");
-        if (event.getItem() == null || itemMeta == null || command == null)
+        if (event.getItem() == null || itemMeta == null || command == null) {
             return;
+        }
 
         ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
         if (itemDefinition == null) {
@@ -116,8 +118,10 @@ public class CommandItemManager implements Listener {
         }
 
         event.setCancelled(true);
-        if (itemDefinition.isSneaking() && !event.getPlayer().isSneaking())
+
+        if (itemDefinition.isSneaking() && !event.getPlayer().isSneaking()) {
             return;
+        }
 
         if (!event.getPlayer().hasPermission("cmdi.item." + command)) {
             event.getPlayer().sendMessage(MsgKey.ITEM_NOPERMISSION.get());
