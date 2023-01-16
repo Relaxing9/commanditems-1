@@ -19,7 +19,7 @@ public class EnchantmentGlow extends EnchantmentWrapper {
         super("enchantment_glow");
     }
     
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({"deprecation", "setAccessible"})
     public static Enchantment getGlow() {
         if (glow != null)
             return glow;
