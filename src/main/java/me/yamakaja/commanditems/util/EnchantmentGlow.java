@@ -1,11 +1,15 @@
 package me.yamakaja.commanditems.util;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InaccessibleObjectException;
+import java.util.logging.Level;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
+
+import me.yamakaja.commanditems.CommandItems;
 
 public class EnchantmentGlow extends EnchantmentWrapper {
 
@@ -26,6 +30,8 @@ public class EnchantmentGlow extends EnchantmentWrapper {
             Field f = Enchantment.class.getDeclaredField("acceptingNew");
             f.setAccessible(true);
             f.set(null, true);
+        } catch (InaccessibleObjectException e) {
+            CommandItems.logger.log(Level.SEVERE, "Could not access the Glow enchantment field", e);
         } catch (Exception e) {
             e.printStackTrace();
         }
