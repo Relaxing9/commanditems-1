@@ -36,40 +36,26 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         boolean unbreakable = false;
         Integer customModelData = null;
 
-        while (p.nextToken() == JsonToken.FIELD_NAME) {
-            switch (p.getCurrentName()) {
-                case "type":
-                    try {
-                        material = Material.valueOf(p.nextTextValue());
-                    } catch (IllegalArgumentException e) {
-                        CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
-                    }
-                    break;
-                case "name":
-                    name = p.nextTextValue();
-                    break;
-                case "lore":
-                    p.nextToken();
-                    String[] loreArray = p.readValueAs(String[].class);
-                    for (int i = 0; i < loreArray.length; i++) {
-                        loreArray[i] = ChatColor.translateAlternateColorCodes('&', loreArray[i]);
-                    }
-                    lore = Arrays.asList(loreArray);
-                    break;
-                case "glow":
-                    glow = p.nextBooleanValue();
-                    break;
-                case "damage":
-                    damage = (short) p.nextIntValue(0);
-                    break;
-                case "unbreakable":
-                    unbreakable = p.nextBooleanValue();
-                    break;
-                case "customModelData":
-                    customModelData = p.nextIntValue(0);
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected result: " + p.getCurrentName());
+        while (p.nextToken() != JsonToken.END_OBJECT) {
+            String fieldName = p.getCurrentName();
+            if (fieldName.equals("type")) {
+                try {
+                    material = Material.valueOf(p.nextTextValue());
+                } catch (IllegalArgumentException e) {
+                    CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
+                }
+            } else if (fieldName.equals("name")) {
+                name = p.nextTextValue();
+            } else if (fieldName.equals("lore")) {
+                lore = Arrays.asList(p.readValueAs(String[].class));
+            } else if (fieldName.equals("glow")) {
+                glow = p.nextBooleanValue();
+            } else if (fieldName.equals("damage")) {
+                damage = p.nextIntValue(0);
+            } else if (fieldName.equals("unbreakable")) {
+                unbreakable = p.nextBooleanValue();
+            } else if (fieldName.equals("customModelData")) {
+                customModelData = p.nextIntValue(0);
             }
         }
 
@@ -80,7 +66,7 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         Damageable newDamage = (Damageable) stack.getItemMeta();
         newDamage.setDamage(damage);
         stack.setItemMeta((ItemMeta) newDamage);
-        
+
         ItemMeta meta = stack.getItemMeta();
 
         Preconditions.checkNotNull(meta, "ItemMeta is null! (Material: " + material + ")");
@@ -88,19 +74,25 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         if (name != null)
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 
-        if (lore != null && !lore.isEmpty())
+        if (lore != null && !lore.isEmpty()) {
+            for (int i = 0; i < lore.size(); i++) {
+                lore.set(i, ChatColor.translateAlternateColorCodes('&', lore.get(i)));
+            }
             meta.setLore(lore);
-
+        }
+        
         meta.setUnbreakable(unbreakable);
-        if (customModelData != null)
+        
+        if (customModelData != null) {
             meta.setCustomModelData(customModelData);
+        }
 
         stack.setItemMeta(meta);
 
-        if (glow)
+        if (glow) {
             stack.addEnchantment(EnchantmentGlow.getGlow(), 1);
+        }
 
         return stack;
     }
-
 }
