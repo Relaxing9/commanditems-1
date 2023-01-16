@@ -152,7 +152,6 @@ public class CommandItemManager implements Listener {
             e.printStackTrace();
         }
     }
-    
 
     public ItemStack runConsume(PlayerInteractEvent event) {
         ItemStack[] contents = event.getPlayer().getInventory().getContents();
