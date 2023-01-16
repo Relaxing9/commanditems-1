@@ -40,8 +40,9 @@ public class ActionMathExpr extends Action {
 
     @Override
     public void init() {
+        Expression ast = parse(this.expr);
         try {
-            this.ast = parse(this.expr);
+            this.ast = ast;
             nullValue = ast;
 
             for (Action action : this.actions) action.init();
