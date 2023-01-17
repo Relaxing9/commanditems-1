@@ -26,6 +26,7 @@ public class CommandItems extends JavaPlugin {
     public static final Logger logger = Logger.getLogger("CommandItems");
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onEnable() {
         new Metrics(this, 1002);
 
