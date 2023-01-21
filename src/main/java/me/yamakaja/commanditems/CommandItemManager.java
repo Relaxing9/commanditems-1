@@ -1,11 +1,9 @@
 package me.yamakaja.commanditems;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Table;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.util.CommandItemsI18N.MsgKey;
-import me.yamakaja.commanditems.util.NMSUtil;
+import java.util.Map;
+import java.util.UUID;
+import java.util.logging.Level;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,9 +12,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.logging.Level;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Table;
+
+import de.tr7zw.changeme.nbtapi.NBTItem;
+import me.yamakaja.commanditems.data.ItemDefinition;
+import me.yamakaja.commanditems.util.CommandItemsI18N.MsgKey;
 
 public class CommandItemManager implements Listener {
 
@@ -100,13 +102,14 @@ public class CommandItemManager implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings({"deprecation", "unchecked"})
     public void onInteract(PlayerInteractEvent event) {
         if (!isValidInteraction(event)) {
             return;
         }
 
         ItemMeta itemMeta = event.getItem().getItemMeta();
-        String command = NMSUtil.getNBTString(itemMeta, "command");
+        String command = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getString("command");
         if (event.getItem() == null || itemMeta == null || command == null) {
             return;
         }
@@ -118,7 +121,7 @@ public class CommandItemManager implements Listener {
             return;
         }
     
-        Map<String, String> params = NMSUtil.getNBTStringMap(event.getItem().getItemMeta(), "params");
+        Map<String, String> params = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getObject("params", Map.class);
     
         if (itemDefinition.isConsumed()) {
             ItemStack contents = runConsume(event);

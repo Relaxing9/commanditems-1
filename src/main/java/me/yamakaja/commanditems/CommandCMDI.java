@@ -23,9 +23,9 @@ import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.data.action.ActionMathExpr;
-import me.yamakaja.commanditems.util.NMSUtil;
 
 @CommandAlias("cmdi")
 public class CommandCMDI extends BaseCommand {
@@ -94,6 +94,7 @@ public class CommandCMDI extends BaseCommand {
 
     @Subcommand("inspect")
     @CommandPermission("cmdi.inspect")
+    @SuppressWarnings({"deprecation", "unchecked"})
     public void onInspect(Player player) {
         ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         if (itemInMainHand.getType() == Material.AIR) {
@@ -103,12 +104,12 @@ public class CommandCMDI extends BaseCommand {
 
         ItemMeta itemMeta = itemInMainHand.getItemMeta();
         String command;
-        if (itemMeta == null || (command = NMSUtil.getNBTString(itemMeta, "command")) == null) {
+        if (itemMeta == null || (command = new NBTItem(itemInMainHand).getOrCreateCompound("cmdi").getString("command")) == null) {
             player.sendMessage(ChatColor.RED + "This is not a command item!");
             return;
         }
 
-        Map<String, String> params = NMSUtil.getNBTStringMap(itemMeta, "params");
+        Map<String, String> params = new NBTItem(itemInMainHand).getOrCreateCompound("cmdi").getObject("params", Map.class);
 
         player.sendMessage(ChatColor.AQUA + "===========================");
         player.sendMessage(ChatColor.AQUA + "  Command: " + ChatColor.GOLD + command);

@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'me.yamakaja.commanditems'
-version '2.5.0'
+version '2.6.0'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -35,6 +35,8 @@ dependencies {
 
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.1"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.14.1"
+
+    implementation "de.tr7zw:item-nbt-api:2.11.1"
 }
 
 shadowJar {
@@ -49,6 +51,8 @@ shadowJar {
 
     relocate 'org.yaml.snakeyaml', 'me.yamakaja.commanditems.lib.org.yaml.snakeyaml'
     relocate 'com.fasterxml', 'me.yamakaja.commanditems.lib.com.fasterxml'
+
+    relocate 'de.tr7zw.changeme.nbtapi', 'me.yamakaja.commanditems.lib.de.tr7zw.changeme.nbtapi'
 }
 
 task install(type: Copy) {
