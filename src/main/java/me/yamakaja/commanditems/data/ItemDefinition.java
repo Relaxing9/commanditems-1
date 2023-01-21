@@ -18,9 +18,9 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.yamakaja.commanditems.data.action.Action;
 import me.yamakaja.commanditems.util.EnchantmentGlow;
-import me.yamakaja.commanditems.util.NMSUtil;
 
 public class ItemDefinition {
 
@@ -69,6 +69,7 @@ public class ItemDefinition {
         @JsonProperty(defaultValue = "")
         private String skullUser;
 
+        @SuppressWarnings("deprecation")
         public ItemStack build(String key, Map<String, String> params) {
             Preconditions.checkNotNull(this.type, "No material specified!");
 
@@ -99,8 +100,10 @@ public class ItemDefinition {
                 skullMeta.setOwningPlayer(player);
             }
 
-            NMSUtil.setNBTString(meta, "command", key);
-            NMSUtil.setNBTStringMap(meta, "params", params);
+            NBTItem nbti = new NBTItem(stack);
+            nbti.getOrCreateCompound("cmdi").setString("command", key);
+            nbti.getOrCreateCompound("cmdi").setObject("params", params);
+            nbti.applyNBT(stack);
 
             stack.setItemMeta(meta);
 
