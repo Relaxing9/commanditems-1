@@ -100,12 +100,12 @@ public class ItemDefinition {
                 skullMeta.setOwningPlayer(player);
             }
 
+            stack.setItemMeta(meta);
+
             NBTItem nbti = new NBTItem(stack);
             nbti.getOrCreateCompound("cmdi").setString("command", key);
             nbti.getOrCreateCompound("cmdi").setObject("params", params);
             nbti.applyNBT(stack);
-
-            stack.setItemMeta(meta);
 
             if (glow)
                 stack.addEnchantment(EnchantmentGlow.getGlow(), 1);
