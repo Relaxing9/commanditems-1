@@ -108,15 +108,28 @@ public class CommandItemManager implements Listener {
             return;
         }
 
-        ItemMeta itemMeta = event.getItem().getItemMeta();
-        String command = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getString("command");
-        if (event.getItem() == null || itemMeta == null || command == null) {
+        if (event.getItem() == null) {
             return;
         }
-    
+
+        ItemMeta itemMeta = event.getItem().getItemMeta();
+        if (itemMeta == null) {
+            return;
+        }
+
+        String command = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getString("command");
+        if (command == null) {
+            return;
+        }
+
         ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
+        if (itemDefinition == null) {
+            event.getPlayer().sendMessage(MsgKey.ITEM_DISABLED.get());
+            return;
+        }
+
         event.setCancelled(true);
-    
+
         if (!isValidPlayer(event.getPlayer(), itemDefinition, command)) {
             return;
         }
@@ -142,10 +155,6 @@ public class CommandItemManager implements Listener {
     }
     
     private boolean isValidPlayer(Player player, ItemDefinition itemDefinition, String command) {
-        if (itemDefinition == null) {
-            player.sendMessage(MsgKey.ITEM_DISABLED.get());
-            return false;
-        }
     
         if (itemDefinition.isSneaking() && !player.isSneaking()) {
             return false;

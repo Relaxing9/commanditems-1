@@ -11,6 +11,7 @@ out/
 .gradle/
 build/
 bin/
+gradle.properties
 
 # Test environment
 testenv/
