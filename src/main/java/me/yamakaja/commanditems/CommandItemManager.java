@@ -11,7 +11,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
@@ -118,7 +117,7 @@ public class CommandItemManager implements Listener {
         }
 
         String command = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getString("command");
-        if (command == null) {
+        if (command == null || command.isEmpty()) {
             return;
         }
 
