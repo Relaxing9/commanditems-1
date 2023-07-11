@@ -31,8 +31,10 @@ public class CommandItems extends JavaPlugin {
         new Metrics(this, 1002);
 
         boolean debug = System.getProperty("me.yamakaja.debug") != null;
-        this.saveResource("config.yml", debug);
-        this.saveResource("messages.yml", debug);
+        if (debug) {
+            this.saveResource("config.yml", debug);
+            this.saveResource("messages.yml", debug);
+        }
 
         CommandItemsI18N.initialize(this);
 
