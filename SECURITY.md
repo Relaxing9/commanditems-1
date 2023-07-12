@@ -6,7 +6,7 @@ These versions of CommandItems are only supported in this fork of the original C
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 2.5.0   | :white_check_mark: |
+| >= 2.5  | :white_check_mark: |
 | < 2.5   | :x:                |
 
 ## Reporting a Vulnerability
