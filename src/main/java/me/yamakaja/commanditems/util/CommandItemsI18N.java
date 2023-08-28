@@ -1,12 +1,13 @@
 package me.yamakaja.commanditems.util;
 
-import me.yamakaja.commanditems.CommandItems;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
 import java.util.Collections;
 import java.util.Map;
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import me.yamakaja.commanditems.CommandItems;
 
 public final class CommandItemsI18N {
 

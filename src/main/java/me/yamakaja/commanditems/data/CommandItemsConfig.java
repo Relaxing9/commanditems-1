@@ -1,8 +1,8 @@
 package me.yamakaja.commanditems.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by Yamakaja on 26.05.18.

@@ -1,11 +1,12 @@
 package me.yamakaja.commanditems.interpreter;
 
+import java.util.Map;
+
+import org.bukkit.entity.Player;
+
 import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.data.action.Action;
-import org.bukkit.entity.Player;
-
-import java.util.Map;
 
 /**
  * Created by Yamakaja on 26.05.18.

@@ -1,9 +1,5 @@
 package me.yamakaja.commanditems.interpreter;
 
-import me.yamakaja.commanditems.CommandItems;
-
-import org.bukkit.entity.Player;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -12,6 +8,10 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
 import java.util.logging.Level;
+
+import org.bukkit.entity.Player;
+
+import me.yamakaja.commanditems.CommandItems;
 
 /**
  * Created by Yamakaja on 26.05.18.
