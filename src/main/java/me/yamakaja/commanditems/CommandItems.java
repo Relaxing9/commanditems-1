@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
 import me.yamakaja.commanditems.data.ItemDefinition;
@@ -29,7 +28,6 @@ public class CommandItems extends JavaPlugin {
     private GitHubHasUpdate update = null;
 
     @Override
-    @SuppressWarnings("deprecation")
     public void onEnable() {
         new Metrics(this, 1002);
 
@@ -55,7 +53,7 @@ public class CommandItems extends JavaPlugin {
             CommandItems.logger.log(Level.INFO, "Update from CommandItems " + result.getCurrentVersion() + " to CommandItems " + result.getLatestVersion() + " available. Download from https://github.com/Relaxing9/CommandItems/releases/latest");
         });
 
-        BukkitCommandManager commandManager = new PaperCommandManager(this);
+        PaperCommandManager commandManager = new PaperCommandManager(this);
 
         commandManager.getCommandContexts().registerContext(ItemDefinition.class, context -> {
             ItemDefinition itemDef = this.configManager.getConfig().getItems().get(context.popFirstArg());
