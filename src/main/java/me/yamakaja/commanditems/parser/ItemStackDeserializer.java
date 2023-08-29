@@ -27,13 +27,13 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         super(ItemStack.class);
     }
 
-    protected Material material = null;
-    protected String name = null;
-    protected List<String> lore = null;
-    protected boolean glow = false;
-    protected int damage = 0;
-    protected boolean unbreakable = false;
-    protected Integer customModelData = null;
+    private Material material = null;
+    private String name = null;
+    private List<String> lore = null;
+    private boolean glow = false;
+    private int damage = 0;
+    private boolean unbreakable = false;
+    private Integer customModelData = null;
 
     @Override
     public ItemStack deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
