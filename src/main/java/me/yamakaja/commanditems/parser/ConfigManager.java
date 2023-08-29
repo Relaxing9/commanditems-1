@@ -1,19 +1,21 @@
 package me.yamakaja.commanditems.parser;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import me.yamakaja.commanditems.CommandItems;
-import me.yamakaja.commanditems.data.CommandItemsConfig;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.data.action.Action;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.inventory.ItemStack;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.inventory.ItemStack;
+
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+
+import me.yamakaja.commanditems.CommandItems;
+import me.yamakaja.commanditems.data.CommandItemsConfig;
+import me.yamakaja.commanditems.data.ItemDefinition;
+import me.yamakaja.commanditems.data.action.Action;
 
 /**
  * Created by Yamakaja on 26.05.18.

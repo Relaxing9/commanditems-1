@@ -1,13 +1,12 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version "7.1.2"
+    id 'com.github.johnrengelman.shadow' version "8.1.1"
     id 'java'
 }
 
 group 'me.yamakaja.commanditems'
-version '2.6.2'
+version '2.6.3'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
 processResources {
     filesMatching("**/plugin.yml") {
@@ -21,7 +20,7 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" }
     maven { url "https://repo.codemc.org/repository/maven-public/" }
     maven { url "https://repo.aikar.co/content/groups/aikar/" }
 }
@@ -42,17 +41,17 @@ dependencies {
 shadowJar {
     archiveBaseName = 'CommandItems'
 
-    relocate 'org.bstats', 'me.yamakaja.commanditems.lib.org.bstats'
+    relocate 'org.bstats', 'me.yamakaja.commanditems.lib.bstats'
 
-    relocate 'co.aikar.commands', 'me.yamakaja.commanditems.lib.co.aikar.commands'
-    relocate 'org.intellij', 'me.yamakaja.commanditems.lib.org.intellij'
-    relocate 'org.jetbrains', 'me.yamakaja.commanditems.lib.org.jetbrains'
-    relocate 'net.jodah', 'me.yamakaja.commanditems.lib.net.jodah'
+    relocate 'co.aikar.commands', 'me.yamakaja.commanditems.lib.acf'
+    relocate 'org.intellij', 'me.yamakaja.commanditems.lib.intellij'
+    relocate 'org.jetbrains', 'me.yamakaja.commanditems.lib.jetbrains'
+    relocate 'net.jodah', 'me.yamakaja.commanditems.lib.jodah'
 
-    relocate 'org.yaml.snakeyaml', 'me.yamakaja.commanditems.lib.org.yaml.snakeyaml'
-    relocate 'com.fasterxml', 'me.yamakaja.commanditems.lib.com.fasterxml'
+    relocate 'org.yaml.snakeyaml', 'me.yamakaja.commanditems.lib.snakeyaml'
+    relocate 'com.fasterxml', 'me.yamakaja.commanditems.lib.fasterxml'
 
-    relocate 'de.tr7zw.changeme.nbtapi', 'me.yamakaja.commanditems.lib.de.tr7zw.changeme.nbtapi'
+    relocate 'de.tr7zw.changeme.nbtapi', 'me.yamakaja.commanditems.lib.nbtapi'
 }
 
 task install(type: Copy) {

@@ -1,11 +1,13 @@
 package me.yamakaja.commanditems.data.action;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.interpreter.InterpretationContext;
+import java.util.List;
+
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import me.yamakaja.commanditems.data.ItemDefinition;
+import me.yamakaja.commanditems.interpreter.InterpretationContext;
 
 /**
  * Created by Yamakaja on 26.05.18.

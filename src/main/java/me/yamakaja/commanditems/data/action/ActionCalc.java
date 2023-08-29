@@ -1,13 +1,13 @@
 package me.yamakaja.commanditems.data.action;
 
+import java.util.List;
+import java.util.logging.Level;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import me.yamakaja.commanditems.CommandItems;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.interpreter.InterpretationContext;
-
-import java.util.List;
-import java.util.logging.Level;
 
 /**
  * Created by Yamakaja on 27.05.18.
