@@ -26,11 +26,13 @@ import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.yamakaja.commanditems.data.ItemDefinition;
 import me.yamakaja.commanditems.data.action.ActionMathExpr;
+import me.yamakaja.commanditems.util.GitHubHasUpdate;
 
 @CommandAlias("cmdi")
 public class CommandCMDI extends BaseCommand {
 
     private CommandItems plugin;
+    private GitHubHasUpdate update = plugin.getUpdate();
 
     public CommandCMDI(CommandItems plugin) {
         this.plugin = plugin;
@@ -40,6 +42,9 @@ public class CommandCMDI extends BaseCommand {
     public void onDefault(CommandSender issuer) {
         issuer.sendMessage(ChatColor.AQUA + "Running " + ChatColor.GOLD + "CommandItems v" + this.plugin.getDescription().getVersion()
                 + ChatColor.AQUA + " by " + ChatColor.GOLD + "Yamakaja"+ ChatColor.AQUA + " & " + ChatColor.GOLD + "Relaxing9" + ChatColor.AQUA + "!");
+        if (hasPermission("cmdi.notify.update") && !(update.getCurrentVersion().equals(update.getLatestVersion()))) {
+            issuer.sendMessage(ChatColor.GREEN + "New Update Available: " + ChatColor.GOLD + update.getLatestVersion());
+        }
         issuer.sendMessage(ChatColor.AQUA + "See " + ChatColor.GOLD + "/cmdi help" + ChatColor.AQUA + " for more information!");
     }
 

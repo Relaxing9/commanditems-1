@@ -1,5 +1,6 @@
 package me.yamakaja.commanditems;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import me.yamakaja.commanditems.interpreter.ItemExecutor;
 import me.yamakaja.commanditems.parser.ConfigManager;
 import me.yamakaja.commanditems.util.CommandItemsI18N;
 import me.yamakaja.commanditems.util.EnchantmentGlow;
+import me.yamakaja.commanditems.util.GitHubHasUpdate;
 
 /**
  * Created by Yamakaja on 07.06.17.
@@ -24,6 +26,7 @@ public class CommandItems extends JavaPlugin {
     private ItemExecutor executor;
     private CommandItemManager commandItemManager;
     public static final Logger logger = Logger.getLogger("CommandItems");
+    private GitHubHasUpdate update = null;
 
     @Override
     @SuppressWarnings("deprecation")
@@ -40,6 +43,17 @@ public class CommandItems extends JavaPlugin {
 
         this.configManager = new ConfigManager(this);
         configManager.parse();
+
+        update = new GitHubHasUpdate(this, "Relaxing9", "CommandItems")
+        .withVersionComparator((latestVersion, currentVersion) ->
+            !latestVersion.equals(currentVersion))
+        .checkUpdate(result -> {
+            if (!result.hasUpdate()) {
+                return;
+            }
+
+            CommandItems.logger.log(Level.INFO, "Update from CommandItems " + result.getCurrentVersion() + " to CommandItems " + result.getLatestVersion() + " available. Download from https://github.com/Relaxing9/CommandItems/releases/latest");
+        });
 
         BukkitCommandManager commandManager = new PaperCommandManager(this);
 
@@ -85,6 +99,10 @@ public class CommandItems extends JavaPlugin {
 
     public CommandItemManager getCommandItemManager() {
         return commandItemManager;
+    }
+
+    public GitHubHasUpdate getUpdate() {
+        return update;
     }
 
 }
