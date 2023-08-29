@@ -11,7 +11,7 @@ sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 processResources {
     filesMatching("**/plugin.yml") {
         filter {
-            it.replace('${version}', project.getVersion())
+            it.replace("${version}", project.getVersion())
         }
     }
 }
@@ -41,17 +41,17 @@ dependencies {
 shadowJar {
     archiveBaseName = 'CommandItems'
 
-    relocate 'org.bstats', 'me.yamakaja.commanditems.lib.bstats'
+    relocate 'org.bstats', "${group}.lib.bstats"
 
-    relocate 'co.aikar.commands', 'me.yamakaja.commanditems.lib.acf'
-    relocate 'org.intellij', 'me.yamakaja.commanditems.lib.intellij'
-    relocate 'org.jetbrains', 'me.yamakaja.commanditems.lib.jetbrains'
-    relocate 'net.jodah', 'me.yamakaja.commanditems.lib.jodah'
+    relocate 'co.aikar.commands', "${group}.lib.acf"
+    relocate 'org.intellij', "${group}.lib.intellij"
+    relocate 'org.jetbrains', "${group}.lib.jetbrains"
+    relocate 'net.jodah', "${group}.lib.jodah"
 
-    relocate 'org.yaml.snakeyaml', 'me.yamakaja.commanditems.lib.snakeyaml'
-    relocate 'com.fasterxml', 'me.yamakaja.commanditems.lib.fasterxml'
+    relocate 'org.yaml.snakeyaml', "${group}.lib.snakeyaml"
+    relocate 'com.fasterxml', "${group}.lib.fasterxml"
 
-    relocate 'de.tr7zw.changeme.nbtapi', 'me.yamakaja.commanditems.lib.nbtapi'
+    relocate 'de.tr7zw.changeme.nbtapi', "${group}.lib.nbtapi"
 }
 
 task install(type: Copy) {
