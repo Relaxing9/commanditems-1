@@ -23,10 +23,6 @@ import me.yamakaja.commanditems.util.EnchantmentGlow;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
-    protected ItemStackDeserializer() {
-        super(ItemStack.class);
-    }
-
     private Material material = null;
     private String name = null;
     private List<String> lore = null;
@@ -34,6 +30,10 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
     private int damage = 0;
     private boolean unbreakable = false;
     private Integer customModelData = null;
+
+    protected ItemStackDeserializer() {
+        super(ItemStack.class);
+    }
 
     @Override
     public ItemStack deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
