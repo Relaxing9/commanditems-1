@@ -102,8 +102,7 @@ public class CommandItems extends JavaPlugin {
     }
 
     private String stripPrefix(String version) {
-        version.toLowerCase();
-        if (version.startsWith("v")) {
+        if (version.toLowerCase().startsWith("v")) {
             version = version.substring(1);
         }
 
