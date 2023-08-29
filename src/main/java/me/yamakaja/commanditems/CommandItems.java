@@ -46,7 +46,7 @@ public class CommandItems extends JavaPlugin {
 
         update = new GitHubHasUpdate(this, "Relaxing9", "CommandItems")
         .withVersionComparator((latestVersion, currentVersion) ->
-            !latestVersion.equals(currentVersion))
+            !stripPrefix(latestVersion).equals(stripPrefix(currentVersion)))
         .checkUpdate(result -> {
             if (!result.hasUpdate()) {
                 return;
@@ -99,6 +99,15 @@ public class CommandItems extends JavaPlugin {
 
     public CommandItemManager getCommandItemManager() {
         return commandItemManager;
+    }
+
+    private String stripPrefix(String version) {
+        version.toLowerCase();
+        if (version.startsWith("v")) {
+            version = version.substring(1);
+        }
+
+        return version;
     }
 
     public GitHubHasUpdate getUpdate() {

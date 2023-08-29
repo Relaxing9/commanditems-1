@@ -42,7 +42,7 @@ public class CommandCMDI extends BaseCommand {
     public void onDefault(CommandSender issuer) {
         issuer.sendMessage(ChatColor.AQUA + "Running " + ChatColor.GOLD + "CommandItems v" + this.plugin.getDescription().getVersion()
                 + ChatColor.AQUA + " by " + ChatColor.GOLD + "Yamakaja"+ ChatColor.AQUA + " & " + ChatColor.GOLD + "Relaxing9" + ChatColor.AQUA + "!");
-        if (hasPermission("cmdi.notify.update") && !(update.getCurrentVersion().equals(update.getLatestVersion()))) {
+        if (hasPermission("cmdi.notify.update") && update.hasUpdate()) {
             issuer.sendMessage(ChatColor.GREEN + "New Update Available: " + ChatColor.GOLD + update.getLatestVersion());
         }
         issuer.sendMessage(ChatColor.AQUA + "See " + ChatColor.GOLD + "/cmdi help" + ChatColor.AQUA + " for more information!");
