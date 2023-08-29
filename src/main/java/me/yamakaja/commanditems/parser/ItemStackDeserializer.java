@@ -23,42 +23,22 @@ import me.yamakaja.commanditems.util.EnchantmentGlow;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
+    private Material material = null;
+    private String name = null;
+    private List<String> lore = null;
+    private boolean glow = false;
+    private int damage = 0;
+    private boolean unbreakable = false;
+    private Integer customModelData = null;
+
     protected ItemStackDeserializer() {
         super(ItemStack.class);
     }
 
     @Override
     public ItemStack deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        Material material = null;
-        String name = null;
-        List<String> lore = null;
-        boolean glow = false;
-        int damage = 0;
-        boolean unbreakable = false;
-        Integer customModelData = null;
-
-        while (p.nextToken() != JsonToken.END_OBJECT) {
-            String fieldName = p.getCurrentName();
-            if (fieldName.equals("type")) {
-                try {
-                    material = Material.valueOf(p.nextTextValue());
-                } catch (IllegalArgumentException e) {
-                    CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
-                }
-            } else if (fieldName.equals("name")) {
-                name = p.nextTextValue();
-            } else if (fieldName.equals("lore")) {
-                lore = Arrays.asList(p.readValueAs(String[].class));
-            } else if (fieldName.equals("glow")) {
-                glow = p.nextBooleanValue();
-            } else if (fieldName.equals("damage")) {
-                damage = p.nextIntValue(0);
-            } else if (fieldName.equals("unbreakable")) {
-                unbreakable = p.nextBooleanValue();
-            } else if (fieldName.equals("customModelData")) {
-                customModelData = p.nextIntValue(0);
-            }
-        }
+        
+        getToken(p);
 
         Preconditions.checkNotNull(material, "No material specified!");
 
@@ -95,5 +75,30 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         }
 
         return stack;
+    }
+
+    public void getToken (JsonParser p) throws IOException, JsonProcessingException {
+        while (p.nextToken() != JsonToken.END_OBJECT) {
+            String fieldName = p.getCurrentName();
+            if (fieldName.equals("type")) {
+                try {
+                    material = Material.valueOf(p.nextTextValue());
+                } catch (IllegalArgumentException e) {
+                    CommandItems.logger.log(Level.WARNING, "Invalid material type!", e);
+                }
+            } else if (fieldName.equals("name")) {
+                name = p.nextTextValue();
+            } else if (fieldName.equals("lore")) {
+                lore = Arrays.asList(p.readValueAs(String[].class));
+            } else if (fieldName.equals("glow")) {
+                glow = p.nextBooleanValue();
+            } else if (fieldName.equals("damage")) {
+                damage = p.nextIntValue(0);
+            } else if (fieldName.equals("unbreakable")) {
+                unbreakable = p.nextBooleanValue();
+            } else if (fieldName.equals("customModelData")) {
+                customModelData = p.nextIntValue(0);
+            }
+        }
     }
 }
