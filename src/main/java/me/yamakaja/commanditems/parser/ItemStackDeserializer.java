@@ -23,13 +23,13 @@ import me.yamakaja.commanditems.util.EnchantmentGlow;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
-    private Material material = null;
-    private String name = null;
-    private List<String> lore = null;
-    private boolean glow = false;
-    private int damage = 0;
-    private boolean unbreakable = false;
-    private Integer customModelData = null;
+    public Material material = null;
+    public String name = null;
+    public List<String> lore = null;
+    public boolean glow = false;
+    public int damage = 0;
+    public boolean unbreakable = false;
+    public Integer customModelData = null;
 
     protected ItemStackDeserializer() {
         super(ItemStack.class);
