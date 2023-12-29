@@ -33,7 +33,7 @@ dependencies {
     implementation "co.aikar:acf-paper:0.5.1-SNAPSHOT"
 
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.3"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.15.3"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.16.1"
 
     implementation "de.tr7zw:item-nbt-api:2.12.1"
 }
