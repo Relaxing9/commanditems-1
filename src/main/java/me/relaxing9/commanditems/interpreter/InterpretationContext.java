@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.interpreter;
+package me.relaxing9.commanditems.interpreter;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 
-import me.yamakaja.commanditems.CommandItems;
+import me.relaxing9.commanditems.CommandItems;
 
 /**
  * Created by Yamakaja on 26.05.18.

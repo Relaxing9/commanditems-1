@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.util;
+package me.relaxing9.commanditems.util;
 
 import java.io.File;
 import java.util.Collections;
@@ -7,7 +7,7 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import me.yamakaja.commanditems.CommandItems;
+import me.relaxing9.commanditems.CommandItems;
 
 public final class CommandItemsI18N {
 

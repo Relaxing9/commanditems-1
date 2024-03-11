@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems;
+package me.relaxing9.commanditems;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +24,8 @@ import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.data.action.ActionMathExpr;
+import me.relaxing9.commanditems.data.ItemDefinition;
+import me.relaxing9.commanditems.data.action.ActionMathExpr;
 
 @CommandAlias("cmdi")
 public class CommandCMDI extends BaseCommand {

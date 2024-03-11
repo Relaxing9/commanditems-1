@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.interpreter;
+package me.relaxing9.commanditems.interpreter;
 
 import java.util.HashMap;
 import java.util.Map;

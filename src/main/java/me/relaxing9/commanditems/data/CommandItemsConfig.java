@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.data;
+package me.relaxing9.commanditems.data;
 
 import java.util.Map;
 

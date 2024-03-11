@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems;
+package me.relaxing9.commanditems;
 
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -9,11 +9,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.PaperCommandManager;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.interpreter.ItemExecutor;
-import me.yamakaja.commanditems.parser.ConfigManager;
-import me.yamakaja.commanditems.util.CommandItemsI18N;
-import me.yamakaja.commanditems.util.EnchantmentGlow;
+import me.relaxing9.commanditems.data.ItemDefinition;
+import me.relaxing9.commanditems.interpreter.ItemExecutor;
+import me.relaxing9.commanditems.parser.ConfigManager;
+import me.relaxing9.commanditems.util.CommandItemsI18N;
+import me.relaxing9.commanditems.util.EnchantmentGlow;
 
 /**
  * Created by Yamakaja on 07.06.17.
@@ -31,10 +31,8 @@ public class CommandItems extends JavaPlugin {
         new Metrics(this, 1002);
 
         boolean debug = System.getProperty("me.yamakaja.debug") != null;
-        if (debug) {
-            this.saveResource("config.yml", debug);
-            this.saveResource("messages.yml", debug);
-        }
+        this.saveResource("config.yml", debug);
+        this.saveResource("messages.yml", debug);
 
         CommandItemsI18N.initialize(this);
 

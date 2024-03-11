@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.data;
+package me.relaxing9.commanditems.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,8 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import me.yamakaja.commanditems.data.action.Action;
-import me.yamakaja.commanditems.util.EnchantmentGlow;
+import me.relaxing9.commanditems.data.action.Action;
 
 public class ItemDefinition {
 
@@ -100,6 +101,7 @@ public class ItemDefinition {
                 skullMeta.setOwningPlayer(player);
             }
 
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             stack.setItemMeta(meta);
 
             NBTItem nbti = new NBTItem(stack);
@@ -108,7 +110,7 @@ public class ItemDefinition {
             nbti.applyNBT(stack);
 
             if (glow)
-                stack.addEnchantment(EnchantmentGlow.getGlow(), 1);
+                stack.addUnsafeEnchantment(Enchantment.WATER_WORKER, 0);
 
             return stack;
         }

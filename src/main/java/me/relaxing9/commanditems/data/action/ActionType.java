@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.data.action;
+package me.relaxing9.commanditems.data.action;
 
 /**
  * Created by Yamakaja on 26.05.18.
