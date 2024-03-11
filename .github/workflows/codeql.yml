@@ -69,6 +69,7 @@ jobs:
 
     - run: |
         echo "Run, Build Application using script"
+        ./gradlew clean
         ./gradlew shadow
 
     - name: Perform CodeQL Analysis
