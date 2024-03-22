@@ -7,7 +7,6 @@ import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -21,6 +20,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.google.common.base.Preconditions;
 
 import me.relaxing9.commanditems.CommandItems;
+import me.relaxing9.commanditems.util.CMDIGlow;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
@@ -73,7 +73,7 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
         stack.setItemMeta(meta);
 
         if (glow)
-            stack.addUnsafeEnchantment(Enchantment.WATER_WORKER, 0);
+            stack.addUnsafeEnchantment(CMDIGlow.getGlow(), 0);
 
         return stack;
     }

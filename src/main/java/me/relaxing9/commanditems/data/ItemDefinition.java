@@ -10,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -22,6 +21,7 @@ import com.google.common.base.Preconditions;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.relaxing9.commanditems.data.action.Action;
+import me.relaxing9.commanditems.util.CMDIGlow;
 
 public class ItemDefinition {
 
@@ -110,7 +110,7 @@ public class ItemDefinition {
             nbti.applyNBT(stack);
 
             if (glow)
-                stack.addUnsafeEnchantment(Enchantment.WATER_WORKER, 0);
+                stack.addUnsafeEnchantment(CMDIGlow.getGlow(), 0);
 
             return stack;
         }

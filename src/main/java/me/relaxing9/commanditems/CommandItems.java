@@ -13,7 +13,7 @@ import me.relaxing9.commanditems.data.ItemDefinition;
 import me.relaxing9.commanditems.interpreter.ItemExecutor;
 import me.relaxing9.commanditems.parser.ConfigManager;
 import me.relaxing9.commanditems.util.CommandItemsI18N;
-import me.relaxing9.commanditems.util.EnchantmentGlow;
+import me.relaxing9.commanditems.util.CMDIGlow;
 
 /**
  * Created by Yamakaja on 07.06.17.
@@ -70,7 +70,7 @@ public class CommandItems extends JavaPlugin {
         this.executor = new ItemExecutor(this);
         this.commandItemManager = new CommandItemManager(this);
 
-        EnchantmentGlow.getGlow();
+        CMDIGlow.getGlow();
     }
 
     public ConfigManager getConfigManager() {

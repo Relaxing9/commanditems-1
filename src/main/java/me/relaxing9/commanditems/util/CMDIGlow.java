@@ -8,11 +8,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class EnchantmentGlow extends EnchantmentWrapper {
+public class CMDIGlow extends EnchantmentWrapper {
 
     private static Enchantment glow;
 
-    public EnchantmentGlow() {
+    public CMDIGlow() {
         super("enchantment_glow");
     }
     
@@ -31,7 +31,7 @@ public class EnchantmentGlow extends EnchantmentWrapper {
             e.printStackTrace();
         }
 
-        glow = new EnchantmentGlow();
+        glow = new CMDIGlow();
         Enchantment.registerEnchantment(glow);
         return glow;
     }
