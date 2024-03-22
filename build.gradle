@@ -1,7 +1,8 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version "8.1.1"
+    id 'io.github.goooler.shadow' version "8.1.7"
     id 'java'
 }
+    // id 'com.github.johnrengelman.shadow' version "8.1.1"
 
 group 'me.relaxing9.commanditems'
 version '2.6.4'
