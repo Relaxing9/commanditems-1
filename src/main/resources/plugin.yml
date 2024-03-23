@@ -1,6 +1,6 @@
 name: CommandItems
 authors: [Yamakaja, Relaxing9]
-main: me.yamakaja.commanditems.CommandItems
+main: me.relaxing9.commanditems.CommandItems
 version: ${version}
 api-version: "1.15"
 api: []

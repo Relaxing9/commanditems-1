@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems;
+package me.relaxing9.commanditems;
 
 import java.util.Map;
 import java.util.UUID;
@@ -17,8 +17,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
 
 import de.tr7zw.changeme.nbtapi.NBTItem;
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.util.CommandItemsI18N.MsgKey;
+import me.relaxing9.commanditems.data.ItemDefinition;
+import me.relaxing9.commanditems.util.CommandItemsI18N.MsgKey;
 
 public class CommandItemManager implements Listener {
 

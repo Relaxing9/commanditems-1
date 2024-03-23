@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.data.action;
+package me.relaxing9.commanditems.data.action;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import me.yamakaja.commanditems.data.ItemDefinition;
-import me.yamakaja.commanditems.interpreter.InterpretationContext;
+import me.relaxing9.commanditems.data.ItemDefinition;
+import me.relaxing9.commanditems.interpreter.InterpretationContext;
 
 /**
  * Created by Yamakaja on 27.05.18.

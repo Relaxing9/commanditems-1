@@ -1,4 +1,4 @@
-package me.yamakaja.commanditems.parser;
+package me.relaxing9.commanditems.parser;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -7,6 +7,7 @@ import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -18,8 +19,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.google.common.base.Preconditions;
 
-import me.yamakaja.commanditems.CommandItems;
-import me.yamakaja.commanditems.util.EnchantmentGlow;
+import me.relaxing9.commanditems.CommandItems;
+import me.relaxing9.commanditems.util.CMDIGlow;
 
 public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
@@ -68,11 +69,11 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
             meta.setCustomModelData(customModelData);
         }
 
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         stack.setItemMeta(meta);
 
-        if (glow) {
-            stack.addEnchantment(EnchantmentGlow.getGlow(), 1);
-        }
+        if (glow)
+            stack.addUnsafeEnchantment(CMDIGlow.getGlow(), 0);
 
         return stack;
     }

@@ -1,24 +1,26 @@
-package me.yamakaja.commanditems.util;
+package me.relaxing9.commanditems.util;
 
 import java.lang.reflect.Field;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.enchantments.EnchantmentWrapper;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public class EnchantmentGlow extends EnchantmentWrapper {
+public class CMDIGlow extends EnchantmentWrapper {
 
     private static Enchantment glow;
 
-    public EnchantmentGlow() {
+    public CMDIGlow() {
         super("enchantment_glow");
     }
     
-    @SuppressWarnings({"deprecation", "setAccessible"})
+    @SuppressWarnings({"setAccessible"})
     public static Enchantment getGlow() {
         if (glow != null)
             return glow;
-        else if ((glow = Enchantment.getByName("Glow")) != null)
+        else if ((glow = Enchantment.WATER_WORKER) != null)
             return glow;
 
         try {
@@ -29,13 +31,16 @@ public class EnchantmentGlow extends EnchantmentWrapper {
             e.printStackTrace();
         }
 
-        glow = new EnchantmentGlow();
+        glow = new CMDIGlow();
         Enchantment.registerEnchantment(glow);
         return glow;
     }
 
     public static void addGlow(ItemStack item) {
-        item.addEnchantment(getGlow(), 1);
+        ItemMeta hideFlags = item.getItemMeta();
+        hideFlags.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        item.setItemMeta(hideFlags);
+        item.addUnsafeEnchantment(WATER_WORKER, 0);
     }
 
     @Override
@@ -56,11 +61,6 @@ public class EnchantmentGlow extends EnchantmentWrapper {
     @Override
     public int getMaxLevel() {
         return 10;
-    }
-
-    @Override
-    public String getName() {
-        return "Glow";
     }
 
     @Override
