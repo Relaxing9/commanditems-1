@@ -47,7 +47,6 @@ class CommandItemsI18N private constructor(private val plugin: CommandItems) {
 
     companion object {
         private var instance: CommandItemsI18N? = null
-            private set
 
         fun initialize(plugin: CommandItems) {
             instance = CommandItemsI18N(plugin)

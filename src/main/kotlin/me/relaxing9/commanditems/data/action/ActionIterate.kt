@@ -24,8 +24,7 @@ class ActionIterate protected constructor() : Action(ActionType.ITER) {
 
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
         val line: String
-        if (perm == null) line = "for (all online players)" else line =
-            String.format("for (all online players with permission %s)", perm)
+        line = if (perm == null) "for (all online players)" else String.format("for (all online players with permission %s)", perm)
         trace.add(ExecutionTrace(depth, line))
         for (action in actions) action.trace(trace, depth + 1)
     }

@@ -19,8 +19,7 @@ class ActionCommand : Action(ActionType.COMMAND) {
     @JsonProperty(value = "perm")
     private val providedPermission = "*"
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
-        val line: String
-        line = when (commandMode) {
+        val line: String = when (commandMode) {
             CommandMode.PLAYER -> String.format("PLAYER: /%s", command)
             CommandMode.CONSOLE -> String.format("CONSOLE: %s", command)
             CommandMode.PLAYER_PRIVILEGED -> String.format(

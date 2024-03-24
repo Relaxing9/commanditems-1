@@ -18,7 +18,7 @@ import java.util.*
 import java.util.stream.Collectors
 
 class ItemDefinition {
-    @kotlin.jvm.Transient
+    @Transient
     private var key: String? = null
 
     @JsonProperty
@@ -72,7 +72,7 @@ class ItemDefinition {
             val meta = stack.itemMeta
             Preconditions.checkNotNull(meta, "ItemMeta is null! (Material: $type)")
             if (name != null) meta!!.setDisplayName(ChatColor.translateAlternateColorCodes('&', name))
-            if (lore != null && lore.isNotEmpty()) meta!!.lore = lore.stream()
+            if (!lore.isNullOrEmpty()) meta!!.lore = lore.stream()
                 .map { x: String? ->
                     ChatColor.translateAlternateColorCodes(
                         '&',
@@ -82,7 +82,7 @@ class ItemDefinition {
                 .collect(Collectors.toList())
             meta!!.isUnbreakable = unbreakable
             if (customModelData != null) meta.setCustomModelData(customModelData)
-            if (type == Material.PLAYER_HEAD && skullUser != null && skullUser.isNotEmpty()) {
+            if (type == Material.PLAYER_HEAD && !skullUser.isNullOrEmpty()) {
                 val skullMeta = meta as SkullMeta?
                 val player = getSkullMeta(skullUser)
                 skullMeta!!.owningPlayer = player

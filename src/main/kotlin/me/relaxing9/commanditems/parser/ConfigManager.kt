@@ -18,10 +18,9 @@ import java.util.logging.Level
 class ConfigManager(private val plugin: CommandItems) {
     var config: CommandItemsConfig? = null
         private set
-    private val mapper: YAMLMapper
+    private val mapper: YAMLMapper = YAMLMapper()
 
     init {
-        mapper = YAMLMapper()
         val module = SimpleModule()
         module.addDeserializer(ItemStack::class.java, ItemStackDeserializer())
         mapper.registerModule(module)
@@ -29,7 +28,7 @@ class ConfigManager(private val plugin: CommandItems) {
 
     fun parse() {
         try {
-            config = mapper.readValue<CommandItemsConfig>(
+            config = mapper.readValue(
                 File(plugin.dataFolder, "config.yml"),
                 CommandItemsConfig::class.java
             )

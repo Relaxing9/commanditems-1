@@ -34,10 +34,10 @@ class ActionRepeat protected constructor() : Action(ActionType.REPEAT) {
     private val actions: Array<Action>
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
         val line: String
-        if (delay == 0 && period == 0) line = String.format(
+        line = if (delay == 0 && period == 0) String.format(
             "for (%s = %d, %s != %d, %s += %d)",
             counterVar, from, counterVar, to, counterVar, increment
-        ) else line = String.format(
+        ) else String.format(
             "for (%s = %d, %s != %d, %s += %d, delay = %d ticks, period = %d ticks)",
             counterVar, from, counterVar, to, counterVar,
             increment, delay, period

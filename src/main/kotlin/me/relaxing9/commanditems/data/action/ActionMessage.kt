@@ -27,11 +27,11 @@ class ActionMessage(
 
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
         val line: String
-        when (target) {
-            MessageTarget.PLAYER -> line = String.format("To player: %s", message)
-            MessageTarget.CONSOLE -> line = String.format("To console: %s", message)
-            MessageTarget.EVERYBODY -> line = String.format("To everybody: %s", message)
-            MessageTarget.PERMISSION -> line = String.format(
+        line = when (target) {
+            MessageTarget.PLAYER -> String.format("To player: %s", message)
+            MessageTarget.CONSOLE -> String.format("To console: %s", message)
+            MessageTarget.EVERYBODY -> String.format("To everybody: %s", message)
+            MessageTarget.PERMISSION -> String.format(
                 "To everybody with permission %s: %s",
                 permission, message
             )

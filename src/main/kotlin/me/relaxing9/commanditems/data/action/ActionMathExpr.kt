@@ -22,7 +22,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
     @JsonProperty(required = true)
     private val actions: Array<Action>
 
-    @kotlin.jvm.Transient
+    @Transient
     private var ast: Expression? = null
     override fun trace(trace: MutableList<ItemDefinition.ExecutionTrace>, depth: Int) {
         val line: String = String.format("%s = %s%s", target, if (round) "(rounded) " else "", expr)

@@ -57,8 +57,7 @@ class ItemStackDeserializer protected constructor() : StdDeserializer<ItemStack?
     @Throws(IOException::class, JsonProcessingException::class)
     fun getToken(p: JsonParser) {
         while (p.nextToken() != JsonToken.END_OBJECT) {
-            val fieldName = p.currentName
-            when (fieldName) {
+            when (p.currentName) {
                 "type" -> {
                     try {
                         material = Material.valueOf(p.nextTextValue())
@@ -70,7 +69,7 @@ class ItemStackDeserializer protected constructor() : StdDeserializer<ItemStack?
                     name = p.nextTextValue()
                 }
                 "lore" -> {
-                    lore = listOf(*p.readValueAs<Array<String>>(Array<String>::class.java))
+                    lore = listOf(*p.readValueAs(Array<String>::class.java))
                 }
                 "glow" -> {
                     glow = p.nextBooleanValue()

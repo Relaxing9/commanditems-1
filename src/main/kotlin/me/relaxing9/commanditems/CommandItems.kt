@@ -23,7 +23,6 @@ class CommandItems : JavaPlugin() {
     var executor: ItemExecutor? = null
         private set
     private var commandItemManager: CommandItemManager? = null
-        private set
 
     override fun onEnable() {
         Metrics(this, 1002)
@@ -55,7 +54,7 @@ class CommandItems : JavaPlugin() {
             "itemparams"
         ) { context: BukkitCommandCompletionContext ->
             val itemDefinition =
-                context.getContextValue<ItemDefinition>(
+                context.getContextValue(
                     ItemDefinition::class.java
                 )
             itemDefinition.getParameters().entries.stream()
@@ -75,6 +74,6 @@ class CommandItems : JavaPlugin() {
     }
 
     companion object {
-        val logger = Logger.getLogger("CommandItems")
+        val logger: Logger = Logger.getLogger("CommandItems")
     }
 }

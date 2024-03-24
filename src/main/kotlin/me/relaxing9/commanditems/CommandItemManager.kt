@@ -102,8 +102,7 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
 
     private fun runConsume(event: PlayerInteractEvent): ItemStack? {
         val contents: Array<ItemStack?> = event.player.inventory.contents
-        var i: Int
-        i = 0
+        var i: Int = 0
         while (i < contents.size) {
             if (contents[i] != null && contents[i]!!.isSimilar(event.item)) {
                 val amount = contents[i]!!.amount
