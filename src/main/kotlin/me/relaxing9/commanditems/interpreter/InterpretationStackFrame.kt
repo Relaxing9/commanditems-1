@@ -10,7 +10,7 @@ class InterpretationStackFrame {
     }
 
     fun pushLocal(key: String, value: String) {
-        locals.put(key, value)
+        locals[key] = value
     }
 
     fun reset() {

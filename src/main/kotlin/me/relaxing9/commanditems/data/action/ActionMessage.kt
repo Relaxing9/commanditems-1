@@ -36,7 +36,7 @@ class ActionMessage(
                 permission, message
             )
 
-            else -> throw IllegalStateException("Unexpected trace value: " + target)
+            else -> throw IllegalStateException("Unexpected trace value: $target")
         }
         trace.add(ExecutionTrace(depth, line))
     }
@@ -57,7 +57,7 @@ class ActionMessage(
                     .forEach { player: Player? -> player!!.sendMessage(message) }
             }
 
-            else -> throw IllegalStateException("Unexpected process value: " + target)
+            else -> throw IllegalStateException("Unexpected process value: $target")
         }
     }
 

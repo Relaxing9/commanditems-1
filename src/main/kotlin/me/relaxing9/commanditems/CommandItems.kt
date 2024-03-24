@@ -22,7 +22,7 @@ class CommandItems : JavaPlugin() {
         private set
     var executor: ItemExecutor? = null
         private set
-    var commandItemManager: CommandItemManager? = null
+    private var commandItemManager: CommandItemManager? = null
         private set
 
     override fun onEnable() {
@@ -64,7 +64,7 @@ class CommandItems : JavaPlugin() {
                         Locale.getDefault()
                     ).startsWith(context.input)
                 })
-                .map<String>(Function<Map.Entry<String, String>, String> { (key, value): Map.Entry<String, String> -> key + "=" + value })
+                .map<String>(Function<Map.Entry<String, String>, String> { (key, value): Map.Entry<String, String> -> "$key=$value" })
                 .collect<List<String>, Any>(Collectors.toList<String>())
         }
         commandManager.registerCommand(CommandCMDI(this))

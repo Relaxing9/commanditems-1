@@ -32,7 +32,7 @@ class CommandItemsI18N private constructor(private val plugin: CommandItems) {
         reload()
     }
 
-    fun reload() {
+    private fun reload() {
         messagesConfig = YamlConfiguration.loadConfiguration(File(plugin.dataFolder, "messages.yml"))
     }
 
@@ -46,7 +46,7 @@ class CommandItemsI18N private constructor(private val plugin: CommandItems) {
     }
 
     companion object {
-        var instance: CommandItemsI18N? = null
+        private var instance: CommandItemsI18N? = null
             private set
 
         fun initialize(plugin: CommandItems) {

@@ -20,15 +20,15 @@ class ActionCommand : Action(ActionType.COMMAND) {
     private val providedPermission = "*"
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
         val line: String
-        when (commandMode) {
-            CommandMode.PLAYER -> line = String.format("PLAYER: /%s", command)
-            CommandMode.CONSOLE -> line = String.format("CONSOLE: %s", command)
-            CommandMode.PLAYER_PRIVILEGED -> line = String.format(
+        line = when (commandMode) {
+            CommandMode.PLAYER -> String.format("PLAYER: /%s", command)
+            CommandMode.CONSOLE -> String.format("CONSOLE: %s", command)
+            CommandMode.PLAYER_PRIVILEGED -> String.format(
                 "PLAYER (with added permission %s): /%s",
                 providedPermission, command
             )
 
-            else -> throw IllegalStateException("Unexpected trace value: " + commandMode)
+            else -> throw IllegalStateException("Unexpected trace value: $commandMode")
         }
         trace.add(ExecutionTrace(depth, line))
     }
@@ -49,7 +49,7 @@ class ActionCommand : Action(ActionType.COMMAND) {
                 }
             }
 
-            else -> throw IllegalStateException("Unexpected process value: " + commandMode)
+            else -> throw IllegalStateException("Unexpected process value: $commandMode")
         }
     }
 

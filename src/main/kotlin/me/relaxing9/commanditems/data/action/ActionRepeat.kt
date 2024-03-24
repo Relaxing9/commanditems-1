@@ -6,6 +6,7 @@ import me.relaxing9.commanditems.data.ItemDefinition.ExecutionTrace
 import me.relaxing9.commanditems.interpreter.InterpretationContext
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.logging.Level
+import kotlin.math.sign
 
 /**
  * Created by Yamakaja on 26.05.18.
@@ -53,7 +54,7 @@ class ActionRepeat protected constructor() : Action(ActionType.REPEAT) {
             Level.WARNING,
             "Increment is 0, infinite loops are not supported by REPEAT!"
         )
-        if (Math.signum(to.toDouble() - from) * increment < 0) CommandItems.logger.log(
+        if (sign(to.toDouble() - from) * increment < 0) CommandItems.logger.log(
             Level.WARNING,
             "Increment is of the wrong sign in REPEAT!"
         )

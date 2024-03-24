@@ -8,8 +8,6 @@ plugins {
 group 'me.relaxing9.commanditems'
 version '2.6.5-SNAPSHOT'
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
-
 processResources {
     filesMatching("**/plugin.yml") {
         filter {

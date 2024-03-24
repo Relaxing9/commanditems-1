@@ -52,7 +52,7 @@ class CommandCMDI(private val plugin: CommandItems) : BaseCommand() {
                 issuer.sendMessage(ChatColor.RED.toString() + "Parameter need to be of the form KEY=VAL")
                 return
             }
-            paramMap.put(split[0], split[1])
+            paramMap[split[0]] = split[1]
         }
         val item = definition.getItem(paramMap)
         item.amount = amount
@@ -140,7 +140,7 @@ class CommandCMDI(private val plugin: CommandItems) : BaseCommand() {
                 sender.sendMessage(ChatColor.RED.toString() + "Invalid parameter description, <VAL> should be a number")
                 return
             }
-            params.put(split[0], x)
+            params[split[0]] = x
         }
         try {
             sender.sendMessage(

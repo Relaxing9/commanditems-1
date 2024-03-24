@@ -7,6 +7,7 @@ import me.relaxing9.commanditems.data.action.ActionMathExpr.Expression
 import me.relaxing9.commanditems.interpreter.InterpretationContext
 import java.util.*
 import java.util.logging.Level
+import kotlin.math.*
 
 class ActionMathExpr : Action(ActionType.MATH_EXPR) {
     @JsonProperty(required = true)
@@ -49,13 +50,10 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
         context.pushFrame()
         val params: MutableMap<String?, Double?> = HashMap()
         context.forEachNumericLocal { key: String?, value: Double? ->
-            params.put(
-                key,
-                value
-            )
+            params[key] = value
         }
         val rval = ast!!.eval(params)
-        if (round) context.pushLocal(target, java.lang.Long.toString(Math.round(rval))) else context.pushLocal(
+        if (round) context.pushLocal(target, rval.roundToLong().toString()) else context.pushLocal(
             target, String.format("%f", rval)
         )
         for (action in actions) action.process(context)
@@ -182,7 +180,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.sqrt(
+                                            sqrt(
                                                 a.eval(params)
                                             )
                                         }
@@ -192,7 +190,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.sin(
+                                            sin(
                                                 a.eval(params)
                                             )
                                         }
@@ -202,7 +200,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.asin(
+                                            asin(
                                                 a.eval(params)
                                             )
                                         }
@@ -212,7 +210,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.cos(
+                                            cos(
                                                 a.eval(params)
                                             )
                                         }
@@ -222,7 +220,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.acos(
+                                            acos(
                                                 a.eval(params)
                                             )
                                         }
@@ -232,7 +230,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.tan(
+                                            tan(
                                                 a.eval(params)
                                             )
                                         }
@@ -242,7 +240,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.atan(
+                                            atan(
                                                 a.eval(params)
                                             )
                                         }
@@ -252,7 +250,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.ceil(
+                                            ceil(
                                                 a.eval(params)
                                             )
                                         }
@@ -262,7 +260,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.floor(
+                                            floor(
                                                 a.eval(params)
                                             )
                                         }
@@ -272,7 +270,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.abs(
+                                            abs(
                                                 a.eval(params)
                                             )
                                         }
@@ -282,7 +280,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.exp(
+                                            exp(
                                                 a.eval(params)
                                             )
                                         }
@@ -292,7 +290,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.log(
+                                            ln(
                                                 a.eval(params)
                                             )
                                         }
@@ -302,7 +300,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.round(a.eval(params))
+                                            a.eval(params).roundToLong()
                                                 .toDouble()
                                         }
                                 }
@@ -364,7 +362,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                                     val a = parseExpression()
                                     me.relaxing9.commanditems.data.action.x =
                                         Expression { params: Map<String?, Double?>? ->
-                                            Math.signum(
+                                            sign(
                                                 a.eval(params)
                                             )
                                         }
@@ -408,10 +406,8 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                     if (eat('^'.code)) {
                         val p = parseFactor()
                         return Expression { params: Map<String?, Double?>? ->
-                            Math.pow(
-                                me.relaxing9.commanditems.data.action.x1.eval(params),
-                                me.relaxing9.commanditems.data.action.p.eval(params)
-                            )
+                            me.relaxing9.commanditems.data.action.x1.eval(params)
+                                .pow(me.relaxing9.commanditems.data.action.p.eval(params))
                         } // exponentiation
                     }
                     if (eat('%'.code)) {

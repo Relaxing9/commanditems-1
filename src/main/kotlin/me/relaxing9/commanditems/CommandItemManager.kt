@@ -14,9 +14,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
 import java.util.*
 import java.util.logging.Level
+import kotlin.math.ceil
 
 class CommandItemManager(private val plugin: CommandItems) : Listener {
-    var iter = 0
+    private var iter = 0
     private val lastUse: Table<UUID, String, Long> = HashBasedTable.create()
 
     init {
@@ -35,7 +36,7 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
         var lastUse: Long = 0
         if (this.lastUse.contains(player.uniqueId, command)) lastUse = this.lastUse[player.uniqueId, command]
         val difference = lastUse + duration * 1000 - System.currentTimeMillis()
-        return if (difference < 0) 0 else Math.ceil(difference / 1000.0).toLong()
+        return if (difference < 0) 0 else ceil(difference / 1000.0).toLong()
     }
 
     @EventHandler
@@ -91,18 +92,15 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
         }
         if (!checkCooldown(player, command, itemDefinition.getCooldown())) {
             val params: MutableMap<String, String?> = Maps.newHashMap()
-            params.put("TIME_PERIOD", getTimeString(itemDefinition.getCooldown()))
-            params.put(
-                "TIME_REMAINING",
-                getTimeString(getSecondsUntilNextUse(player, command, itemDefinition.getCooldown()))
-            )
+            params["TIME_PERIOD"] = getTimeString(itemDefinition.getCooldown())
+            params["TIME_REMAINING"] = getTimeString(getSecondsUntilNextUse(player, command, itemDefinition.getCooldown()))
             player.sendMessage(CommandItemsI18N.MsgKey.ITEM_COOLDOWN[params])
             return false
         }
         return true
     }
 
-    fun runConsume(event: PlayerInteractEvent): ItemStack? {
+    private fun runConsume(event: PlayerInteractEvent): ItemStack? {
         val contents: Array<ItemStack?> = event.player.inventory.contents
         var i: Int
         i = 0
@@ -134,17 +132,17 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
                 builder.append('d')
             }
             if (hours != 0) {
-                if (builder.length > 0) builder.append(' ')
+                if (builder.isNotEmpty()) builder.append(' ')
                 builder.append(hours)
                 builder.append('h')
             }
             if (minutes != 0) {
-                if (builder.length > 0) builder.append(' ')
+                if (builder.isNotEmpty()) builder.append(' ')
                 builder.append(minutes)
                 builder.append('m')
             }
             if (seconds != 0) {
-                if (builder.length > 0) builder.append(' ')
+                if (builder.isNotEmpty()) builder.append(' ')
                 builder.append(seconds)
                 builder.append('s')
             }

@@ -50,7 +50,7 @@ class InterpretationContext {
         interpretationStack.first.pushLocal(key, value)
     }
 
-    fun resolveLocal(key: String?): String? {
+    private fun resolveLocal(key: String?): String? {
         val iterator: Iterator<InterpretationStackFrame> = interpretationStack.iterator()
         while (iterator.hasNext()) {
             val next = iterator.next()

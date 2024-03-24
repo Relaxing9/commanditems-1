@@ -19,13 +19,13 @@ import java.util.*
 import java.util.logging.Level
 
 class ItemStackDeserializer protected constructor() : StdDeserializer<ItemStack?>(ItemStack::class.java) {
-    var material: Material? = null
+    private var material: Material? = null
     var name: String? = null
-    var lore: MutableList<String>? = null
-    var glow = false
-    var damage = 0
-    var unbreakable = false
-    var customModelData: Int? = null
+    private var lore: MutableList<String>? = null
+    private var glow = false
+    private var damage = 0
+    private var unbreakable = false
+    private var customModelData: Int? = null
 
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(p: JsonParser, ctxt: DeserializationContext): ItemStack {
@@ -38,7 +38,7 @@ class ItemStackDeserializer protected constructor() : StdDeserializer<ItemStack?
         val meta = stack.itemMeta
         Preconditions.checkNotNull(meta, "ItemMeta is null! (Material: $material)")
         if (name != null) meta!!.setDisplayName(ChatColor.translateAlternateColorCodes('&', name!!))
-        if (lore != null && !lore!!.isEmpty()) {
+        if (lore != null && lore!!.isNotEmpty()) {
             for (i in lore.indices) {
                 lore!![i] = ChatColor.translateAlternateColorCodes('&', lore!![i])
             }
@@ -58,24 +58,32 @@ class ItemStackDeserializer protected constructor() : StdDeserializer<ItemStack?
     fun getToken(p: JsonParser) {
         while (p.nextToken() != JsonToken.END_OBJECT) {
             val fieldName = p.currentName
-            if (fieldName == "type") {
-                try {
-                    material = Material.valueOf(p.nextTextValue())
-                } catch (e: IllegalArgumentException) {
-                    CommandItems.logger.log(Level.WARNING, "Invalid material type!", e)
+            when (fieldName) {
+                "type" -> {
+                    try {
+                        material = Material.valueOf(p.nextTextValue())
+                    } catch (e: IllegalArgumentException) {
+                        CommandItems.logger.log(Level.WARNING, "Invalid material type!", e)
+                    }
                 }
-            } else if (fieldName == "name") {
-                name = p.nextTextValue()
-            } else if (fieldName == "lore") {
-                lore = Arrays.asList(*p.readValueAs<Array<String>>(Array<String>::class.java))
-            } else if (fieldName == "glow") {
-                glow = p.nextBooleanValue()
-            } else if (fieldName == "damage") {
-                damage = p.nextIntValue(0)
-            } else if (fieldName == "unbreakable") {
-                unbreakable = p.nextBooleanValue()
-            } else if (fieldName == "customModelData") {
-                customModelData = p.nextIntValue(0)
+                "name" -> {
+                    name = p.nextTextValue()
+                }
+                "lore" -> {
+                    lore = listOf(*p.readValueAs<Array<String>>(Array<String>::class.java))
+                }
+                "glow" -> {
+                    glow = p.nextBooleanValue()
+                }
+                "damage" -> {
+                    damage = p.nextIntValue(0)
+                }
+                "unbreakable" -> {
+                    unbreakable = p.nextBooleanValue()
+                }
+                "customModelData" -> {
+                    customModelData = p.nextIntValue(0)
+                }
             }
         }
     }
