@@ -68,7 +68,7 @@ class CommandCMDI(private val plugin: CommandItems) : BaseCommand() {
     @CommandPermission("cmdi.reload")
     fun onReload(sender: CommandSender) {
         try {
-            plugin.configManager.parse()
+            plugin.configManager?.parse()
             sender.sendMessage(ChatColor.GREEN.toString() + "Successfully reloaded config!")
         } catch (e: RuntimeException) {
             sender.sendMessage(ChatColor.RED.toString() + "Failed to read the configuration:")
@@ -95,7 +95,7 @@ class CommandCMDI(private val plugin: CommandItems) : BaseCommand() {
         val params: Map<String, String> = NBTItem(itemInMainHand).getOrCreateCompound("cmdi").getObject<Map<*, *>>(
             "params",
             MutableMap::class.java
-        )
+        ) as Map<String, String>
         player.sendMessage(ChatColor.AQUA.toString() + "===========================")
         player.sendMessage(ChatColor.AQUA.toString() + "  Command: " + ChatColor.GOLD + command)
         player.sendMessage(ChatColor.AQUA.toString() + "  Parameters:")
@@ -104,7 +104,7 @@ class CommandCMDI(private val plugin: CommandItems) : BaseCommand() {
                     + " = " + ChatColor.GOLD + entry.value)
         )
         player.sendMessage(ChatColor.AQUA.toString() + "  Execution Trace:")
-        val itemDefinition = plugin.configManager.config.items[command]
+        val itemDefinition = plugin.configManager?.config?.items?.get(command)
         if (itemDefinition == null) player.sendMessage(ChatColor.AQUA.toString() + "  - " + ChatColor.RED + "This item has been disabled!") else {
             val trace: List<ItemDefinition.ExecutionTrace> = itemDefinition.getExecutionTrace()
             for (item: ItemDefinition.ExecutionTrace in trace) player.sendMessage(

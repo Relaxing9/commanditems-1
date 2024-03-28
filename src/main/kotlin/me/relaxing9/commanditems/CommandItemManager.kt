@@ -52,7 +52,7 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
         if (command == null || command.isEmpty()) {
             return
         }
-        val itemDefinition = plugin.configManager.config.items[command]
+        val itemDefinition = plugin.configManager?.config?.items?.get(command)
         if (itemDefinition == null) {
             event.player.sendMessage(CommandItemsI18N.MsgKey.ITEM_DISABLED.get())
             return
@@ -70,7 +70,7 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
             event.player.inventory.setItem(iter, contents)
         }
         try {
-            plugin.executor.processInteraction(event.player, itemDefinition, params)
+            plugin.executor?.processInteraction(event.player, itemDefinition, params)
         } catch (e: RuntimeException) {
             CommandItems.logger.log(Level.SEVERE, "Failed to process command item: $command")
             event.player.sendMessage(CommandItemsI18N.MsgKey.ITEM_ERROR.get())
@@ -102,7 +102,7 @@ class CommandItemManager(private val plugin: CommandItems) : Listener {
 
     private fun runConsume(event: PlayerInteractEvent): ItemStack? {
         val contents: Array<ItemStack?> = event.player.inventory.contents
-        var i: Int = 0
+        var i = 0
         while (i < contents.size) {
             if (contents[i] != null && contents[i]!!.isSimilar(event.item)) {
                 val amount = contents[i]!!.amount

@@ -165,7 +165,7 @@ class ActionMathExpr : Action(ActionType.MATH_EXPR) {
                         eat(')'.code)
                     } else if (ch >= '0'.code && ch <= '9'.code || ch == '.'.code) { // numbers
                         while (ch >= '0'.code && ch <= '9'.code || ch == '.'.code) nextChar()
-                        val res: Double = str.substring(me.relaxing9.commanditems.data.action.startPos, pos).toDouble()
+                        val res: Double = str?.substring(me.relaxing9.commanditems.data.action.startPos, pos).toDouble()
                         me.relaxing9.commanditems.data.action.x =
                             Expression { params: Map<String?, Double?>? -> me.relaxing9.commanditems.data.action.res }
                     } else if (ch >= 'a'.code && ch <= 'z'.code || ch >= 'A'.code && ch <= 'Z'.code) { // symbols. May not start with a number or underscore

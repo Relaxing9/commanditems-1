@@ -40,7 +40,7 @@ class CMDIGlow : EnchantmentWrapper("enchantment_glow") {
                     e.printStackTrace()
                 }
                 field = CMDIGlow()
-                registerEnchantment(field)
+                registerEnchantment(field as CMDIGlow)
                 return field
             }
             private set

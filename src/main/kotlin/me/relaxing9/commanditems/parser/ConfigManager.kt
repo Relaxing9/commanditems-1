@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper
 import me.relaxing9.commanditems.CommandItems
 import me.relaxing9.commanditems.data.CommandItemsConfig
-import me.relaxing9.commanditems.data.ItemDefinition
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
-import org.bukkit.entity.Item
 import org.bukkit.inventory.ItemStack
 import java.io.File
 import java.io.IOException
@@ -39,7 +36,7 @@ class ConfigManager(private val plugin: CommandItems) {
         for ((key, value) in this.config?.items?.entries!!) {
             value.setKey(key)
             try {
-                for (action in value.getActions()) action.init()
+                for (action in value.actions) action.init()
             } catch (e: RuntimeException) {
                 CommandItems.logger.log(Level.SEVERE, "Failed to initialize command item: $key")
                 CommandItems.logger.log(Level.SEVERE, "${e.message}")

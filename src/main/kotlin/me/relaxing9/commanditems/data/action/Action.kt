@@ -16,7 +16,7 @@ import me.relaxing9.commanditems.interpreter.InterpretationContext
     JsonSubTypes.Type(value = ActionCalc::class, name = "CALC"),
     JsonSubTypes.Type(value = ActionMathExpr::class, name = "MATH_EXPR")
 )
-abstract class Action protected constructor(@field:JsonProperty("action") val type: ActionType) {
+abstract class Action protected constructor(@field:JsonProperty("action") val ignoredType: ActionType) {
 
     abstract fun process(context: InterpretationContext?)
     fun init() {
