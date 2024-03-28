@@ -20,8 +20,8 @@ class ItemExecutor(private val plugin: CommandItems) {
         context.pushLocal("pitch", player.location.pitch.toString())
         context.pushLocal("food", player.foodLevel.toString())
         context.pushLocal("health", player.health.toString())
-        if (definition.getParameters() != null) for ((key, value): Map.Entry<String?, String?> in definition.getParameters().entries) context.pushLocal(
-        key, params.getOrDefault(key, value))
+        if (definition.parameters != null) for ((key, value) in definition.parameters.entries) context.pushLocal(
+            key, params.getOrDefault(key, value))
         for (action in definition.getActions()) action.process(context)
         context.popFrame()
     }

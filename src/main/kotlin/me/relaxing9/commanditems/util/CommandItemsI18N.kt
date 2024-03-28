@@ -39,9 +39,7 @@ class CommandItemsI18N private constructor(private val plugin: CommandItems) {
     fun getMessage(key: MsgKey, params: Map<String, String?>): String {
         var msg = messagesConfig!!.getString(key.getKey())
         if (msg == null) msg = key.getDefaultMessage()
-        for ((key1, value): Map.Entry<String, String?> in params) msg = msg.replace("$"+key1,
-        value
-        )
+        for ((key, value) in params) msg = msg?.replace("$$key", value!!)
         return ChatColor.translateAlternateColorCodes('&', msg!!)
     }
 

@@ -7,6 +7,7 @@ import me.relaxing9.commanditems.data.CommandItemsConfig
 import me.relaxing9.commanditems.data.ItemDefinition
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
+import org.bukkit.entity.Item
 import org.bukkit.inventory.ItemStack
 import java.io.File
 import java.io.IOException
@@ -35,13 +36,13 @@ class ConfigManager(private val plugin: CommandItems) {
         } catch (e: IOException) {
             CommandItems.logger.log(Level.SEVERE, "Failed to read config!", e)
         }
-        for ((key, value): Map.Entry<String, ItemDefinition> in config.getItems().entries) {
+        for ((key, value) in this.config?.items?.entries!!) {
             value.setKey(key)
             try {
                 for (action in value.getActions()) action.init()
             } catch (e: RuntimeException) {
-                plugin.logger.severe(ChatColor.RED.toString() + "Failed to initialize command item: " + key)
-                plugin.logger.severe(ChatColor.RED.toString() + e.message)
+                CommandItems.logger.log(Level.SEVERE, "Failed to initialize command item: $key")
+                CommandItems.logger.log(Level.SEVERE, "${e.message}")
                 Bukkit.getPluginManager().disablePlugin(plugin)
             }
         }

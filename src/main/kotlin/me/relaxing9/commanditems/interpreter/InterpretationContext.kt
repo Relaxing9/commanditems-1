@@ -64,7 +64,7 @@ class InterpretationContext {
         val iterator = interpretationStack.descendingIterator()
         while (iterator.hasNext()) {
             val next = iterator.next()
-            for ((key, value): Map.Entry<String?, String> in next.locals) {
+            for ((key, value) in next.getLocals()) {
                 try {
                     consumer.accept(key, value.toDouble())
                 } catch (ignored: Exception) {
