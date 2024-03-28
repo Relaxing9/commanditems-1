@@ -18,7 +18,7 @@ import java.io.IOException
 import java.util.*
 import java.util.logging.Level
 
-class ItemStackDeserializer internal constructor() : StdDeserializer<ItemStack?>(ItemStack::class.java) {
+open class ItemStackDeserializer internal constructor() : StdDeserializer<ItemStack?>(ItemStack::class.java) {
     private var material: Material? = null
     var name: String? = null
     private var lore: MutableList<String>? = null

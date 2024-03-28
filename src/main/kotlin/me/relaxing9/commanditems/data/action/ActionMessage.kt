@@ -11,11 +11,11 @@ import java.util.logging.Level
 
 class ActionMessage(
     @JsonProperty("action") type: ActionType?,
-    @param:JsonProperty("to") private val target: MessageTarget?,
+    @param:JsonProperty("to") private var target: MessageTarget?,
     @JsonProperty(value = "message", required = true) message: String?,
     @JsonProperty("perm") permission: String?
 ) :
-    Action(type!!) {
+    Action(ActionType.MESSAGE) {
     private val message: String
     private val permission: String?
 
@@ -26,8 +26,7 @@ class ActionMessage(
     }
 
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
-        val line: String
-        line = when (target) {
+        val line: String = when (target) {
             MessageTarget.PLAYER -> String.format("To player: %s", message)
             MessageTarget.CONSOLE -> String.format("To console: %s", message)
             MessageTarget.EVERYBODY -> String.format("To everybody: %s", message)

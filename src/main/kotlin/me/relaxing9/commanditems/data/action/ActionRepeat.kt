@@ -33,8 +33,7 @@ class ActionRepeat protected constructor() : Action(ActionType.REPEAT) {
     @JsonProperty(required = true)
     private val actions: Array<Action>
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
-        val line: String
-        line = if (delay == 0 && period == 0) String.format(
+        val line: String = if (delay == 0 && period == 0) String.format(
             "for (%s = %d, %s != %d, %s += %d)",
             counterVar, from, counterVar, to, counterVar, increment
         ) else String.format(

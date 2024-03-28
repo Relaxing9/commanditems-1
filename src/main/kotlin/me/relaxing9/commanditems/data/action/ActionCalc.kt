@@ -53,21 +53,25 @@ class ActionCalc : Action(ActionType.CALC) {
     }
 
     enum class OperationType(val op: Char) {
+        @Suppress("unused")
         ADD('+') {
             override fun process(a: Int, b: Int): Int {
                 return a + b
             }
         },
+        @Suppress("unused")
         SUB('-') {
             override fun process(a: Int, b: Int): Int {
                 return a - b
             }
         },
+        @Suppress("unused")
         MUL('*') {
             override fun process(a: Int, b: Int): Int {
                 return a * b
             }
         },
+        @Suppress("unused")
         DIV('/') {
             override fun process(a: Int, b: Int): Int {
                 return a / b

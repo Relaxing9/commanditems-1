@@ -23,8 +23,7 @@ class ActionIterate protected constructor() : Action(ActionType.ITER) {
     }
 
     override fun trace(trace: MutableList<ExecutionTrace>, depth: Int) {
-        val line: String
-        line = if (perm == null) "for (all online players)" else String.format("for (all online players with permission %s)", perm)
+        val line: String = if (perm == null) "for (all online players)" else String.format("for (all online players with permission %s)", perm)
         trace.add(ExecutionTrace(depth, line))
         for (action in actions) action.trace(trace, depth + 1)
     }
@@ -35,22 +34,23 @@ class ActionIterate protected constructor() : Action(ActionType.ITER) {
         context.popFrame()
     }
 
+    @Suppress("unused")
     enum class IterationTarget {
         ONLINE_PLAYERS {
-            override fun process(action: ActionIterate, context: InterpretationContext) {
+            override fun process(action: ActionIterate?, context: InterpretationContext?) {
                 Bukkit.getOnlinePlayers().stream()
-                    .filter { player: Player? -> action.perm == null || player!!.hasPermission(action.perm) }
+                    .filter { player: Player? -> action!!.perm == null || action.perm?.let { player!!.hasPermission(it) } == true }
                     .forEach { player: Player? ->
-                        context.pushLocal("iter_locX", player!!.location.blockX.toString())
-                        context.pushLocal("iter_locY", player.location.blockY.toString())
-                        context.pushLocal("iter_locZ", player.location.blockZ.toString())
-                        context.pushLocal("iter_name", player.name)
-                        context.pushLocal("iter_displayname", player.displayName)
-                        context.pushLocal("iter_uuid", player.uniqueId.toString())
-                        context.pushLocal("iter_health", player.health.toInt().toString())
-                        context.pushLocal("iter_level", player.level.toString())
-                        context.pushLocal("iter_food", player.foodLevel.toString())
-                        for (subAction in action.actions) subAction.process(
+                        context?.pushLocal("iter_locX", player!!.location.blockX.toString())
+                        context?.pushLocal("iter_locY", player!!.location.blockY.toString())
+                        context?.pushLocal("iter_locZ", player!!.location.blockZ.toString())
+                        context?.pushLocal("iter_name", player!!.name)
+                        context?.pushLocal("iter_displayname", player!!.displayName)
+                        context?.pushLocal("iter_uuid", player!!.uniqueId.toString())
+                        context?.pushLocal("iter_health", player!!.health.toInt().toString())
+                        context?.pushLocal("iter_level", player!!.level.toString())
+                        context?.pushLocal("iter_food", player!!.foodLevel.toString())
+                        for (subAction in action!!.actions) subAction.process(
                             context
                         )
                     }
