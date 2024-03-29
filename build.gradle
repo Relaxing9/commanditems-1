@@ -9,14 +9,6 @@ version '2.6.4'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
-processResources {
-    filesMatching("**/plugin.yml") {
-        filter {
-            it.replace("${version}", project.getVersion())
-        }
-    }
-}
-
 repositories {
     mavenCentral()
     mavenLocal()
