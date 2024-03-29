@@ -28,7 +28,7 @@ dependencies {
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.0"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.17.0"
 
-    implementation "de.tr7zw:item-nbt-api:2.11.3"
+    implementation "de.tr7zw:item-nbt-api:2.12.3"
 }
 
 shadowJar {
