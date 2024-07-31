@@ -80,7 +80,7 @@ public class ItemStackDeserializer extends StdDeserializer<ItemStack> {
 
     public void getToken (JsonParser p) throws IOException, JsonProcessingException {
         while (p.nextToken() != JsonToken.END_OBJECT) {
-            String fieldName = p.getCurrentName();
+            String fieldName = p.currentName();
             if (fieldName.equals("type")) {
                 try {
                     material = Material.valueOf(p.nextTextValue());
