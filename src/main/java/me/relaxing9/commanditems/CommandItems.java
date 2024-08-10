@@ -30,7 +30,7 @@ public class CommandItems extends JavaPlugin {
     public void onEnable() {
         new Metrics(this, 1002);
 
-        boolean debug = System.getProperty("me.yamakaja.debug") != null;
+        boolean debug = System.getProperty("me.relaxing9.debug") != null;
         this.saveResource("config.yml", debug);
         this.saveResource("messages.yml", debug);
 

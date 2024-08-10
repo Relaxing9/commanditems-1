@@ -1,4 +1,4 @@
-# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.15--1.20.4-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://github.com/Relaxing9/commanditems)
+# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.15--1.21.1-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://github.com/Relaxing9/commanditems)
 <div align="center">
   <img src="https://img.shields.io/github/v/release/Relaxing9/CommandItems?style=for-the-badge" alt="Release"/>
   <img src="https://img.shields.io/github/last-commit/Relaxing9/CommandItems?label=Last%20Updated&style=for-the-badge" alt="Last Updated"/>

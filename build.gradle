@@ -1,11 +1,10 @@
 plugins {
-    id 'io.github.goooler.shadow' version "8.1.8"
+    id 'com.gradleup.shadow' version "8.3.0"
     id 'java'
 }
-    // id 'com.github.johnrengelman.shadow' version "8.1.1"
 
 group 'me.relaxing9.commanditems'
-version '2.6.5'
+version '2.6.6'
 
 sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 
@@ -28,7 +27,7 @@ dependencies {
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.17.2"
 
-    implementation "de.tr7zw:item-nbt-api:2.13.1"
+    implementation "de.tr7zw:item-nbt-api:2.13.2"
 }
 
 shadowJar {
