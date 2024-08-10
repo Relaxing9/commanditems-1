@@ -1,4 +1,10 @@
-# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.15--1.20.4-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://github.com/Relaxing9/commanditems?utm_source=github.com&utm_medium=referral&utm_content=Relaxing9/commanditems&utm_campaign=Badge_Grade_Settings)
+# Command Items [![Support](https://img.shields.io/badge/Minecraft-1.15--1.20.4-green.svg)](https://github.com/Relaxing9/commanditems/releases) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2c1f79c66c514af2895150213ce2a7e9)](https://github.com/Relaxing9/commanditems)
+<div align="center">
+  <img src="https://img.shields.io/github/v/release/Relaxing9/CommandItems?style=for-the-badge" alt="Release"/>
+  <img src="https://img.shields.io/github/last-commit/Relaxing9/CommandItems?label=Last%20Updated&style=for-the-badge" alt="Last Updated"/>
+  <img src="https://img.shields.io/github/downloads/Relaxing9/CommandItems/total?style=for-the-badge" alt="Downloads"/>
+  <a href="https://discord.gg/EJcdyXCpn4"><img src="https://img.shields.io/discord/1268034764330369088?color=blue&label=Discord&logo=Discord&logoColor=white&style=for-the-badge" alt="Discord"/></a>
+</div>
 
 This plugin aims to create items that trigger actions.
 
