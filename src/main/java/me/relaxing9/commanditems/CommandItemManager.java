@@ -101,28 +101,29 @@ public class CommandItemManager implements Listener {
         return (long) Math.ceil(difference / 1000.0);
     }
 
+    @SuppressWarnings({ "deprecation", "unchecked" })
     @EventHandler
-    @SuppressWarnings({"deprecation", "unchecked"})
     public void onInteract(PlayerInteractEvent event) {
         if (!isValidInteraction(event)) {
             return;
         }
 
-        if (event.getItem() == null) {
+        ItemStack item = event.getItem();
+        if (item == null) {
             return;
         }
 
-        ItemMeta itemMeta = event.getItem().getItemMeta();
+        ItemMeta itemMeta = item.getItemMeta();
         if (itemMeta == null) {
             return;
         }
 
-        String command = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getString("command");
-        if (command == null || command.isEmpty()) {
+        String commandName = new NBTItem(item).getOrCreateCompound("cmdi").getString("command");
+        if (commandName == null || commandName.isEmpty()) {
             return;
         }
 
-        ItemDefinition itemDefinition = this.plugin.getConfigManager().getConfig().getItems().get(command);
+        ItemDefinition itemDefinition = plugin.getConfigManager().getConfig().getItems().get(commandName);
         if (itemDefinition == null) {
             event.getPlayer().sendMessage(MsgKey.ITEM_DISABLED.get());
             return;
@@ -130,21 +131,21 @@ public class CommandItemManager implements Listener {
 
         event.setCancelled(true);
 
-        if (!isValidPlayer(event.getPlayer(), itemDefinition, command)) {
+        if (!isValidPlayer(event.getPlayer(), itemDefinition, commandName)) {
             return;
         }
-    
-        Map<String, String> params = new NBTItem(event.getItem()).getOrCreateCompound("cmdi").getObject("params", Map.class);
-    
+
+        Map<String, String> params = new NBTItem(item).getOrCreateCompound("cmdi").getObject("params", Map.class);
+
         if (itemDefinition.isConsumed()) {
             ItemStack contents = runConsume(event);
             event.getPlayer().getInventory().setItem(getIter(), contents);
         }
-    
+
         try {
-            this.plugin.getExecutor().processInteraction(event.getPlayer(), itemDefinition, params);
+            plugin.getExecutor().processInteraction(event.getPlayer(), itemDefinition, params);
         } catch (RuntimeException e) {
-            CommandItems.logger.log(Level.SEVERE, "Failed to process command item: " + command);
+            CommandItems.logger.log(Level.SEVERE, "Failed to process command item: " + commandName);
             event.getPlayer().sendMessage(MsgKey.ITEM_ERROR.get());
             e.printStackTrace();
         }
