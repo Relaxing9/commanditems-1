@@ -64,18 +64,18 @@ public class ActionMathExpr extends Action {
     // ====================================================
     // Derived from: https://stackoverflow.com/a/26227947
     // ====================================================
-    public static Expression parse(final String str) {
+    public static Expression parse(String str) {
         return new Object() {
-            int pos = -1;
-            int ch;
+            int position = -1;
+            int currentChar;
 
             void nextChar() {
-                ch = (++pos < str.length()) ? str.charAt(pos) : -1;
+                currentChar = (++position < str.length()) ? str.charAt(position) : -1;
             }
 
-            boolean eat(int charToEat) {
-                while (ch == ' ') nextChar();
-                if (ch == charToEat) {
+            boolean eat(int expectedChar) {
+                while (currentChar == ' ') nextChar();
+                if (currentChar == expectedChar) {
                     nextChar();
                     return true;
                 }
@@ -84,10 +84,10 @@ public class ActionMathExpr extends Action {
 
             Expression parse() {
                 nextChar();
-                Expression x = parseExpression();
-                if (pos < str.length())
-                    CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
-                return x;
+                Expression expression = parseExpression();
+                if (position < str.length())
+                    CommandItems.logger.log(Level.WARNING, "Unexpected: " + (char) currentChar);
+                return expression;
             }
 
             // Grammar:
@@ -97,120 +97,121 @@ public class ActionMathExpr extends Action {
             //        | number | functionName factor | factor `^` factor
 
             Expression parseExpression() {
-                Expression x = parseTerm();
-                for (; ; ) {
+                Expression expression = parseTerm();
+                while (true) {
                     if (eat('+')) {
-                        Expression a = x;
-                        Expression b = parseTerm();
-                        x = (params) -> (a.eval(params) + b.eval(params)); // addition
+                        Expression left = expression;
+                        Expression right = parseTerm();
+                        expression = (params) -> left.eval(params) + right.eval(params);
                     } else if (eat('-')) {
-                        Expression a = x;
-                        Expression b = parseTerm();
-                        x = (params) -> (a.eval(params) - b.eval(params)); // subtraction
-                    } else return x;
+                        Expression left = expression;
+                        Expression right = parseTerm();
+                        expression = (params) -> left.eval(params) - right.eval(params);
+                    } else return expression;
                 }
             }
 
             Expression parseTerm() {
-                Expression x = parseFactor();
-                for (; ; ) {
+                Expression expression = parseFactor();
+                while (true) {
                     if (eat('*')) {
-                        Expression a = x;
-                        Expression b = parseFactor();
-                        x = (params) -> (a.eval(params) * b.eval(params));
+                        Expression left = expression;
+                        Expression right = parseFactor();
+                        expression = (params) -> left.eval(params) * right.eval(params);
                     } else if (eat('/')) {
-                        Expression a = x;
-                        Expression b = parseFactor();
-                        x = (params) -> (a.eval(params) / b.eval(params));
-                    } else return x;
+                        Expression left = expression;
+                        Expression right = parseFactor();
+                        expression = (params) -> left.eval(params) / right.eval(params);
+                    } else return expression;
                 }
             }
 
             Expression parseFactor() {
                 if (eat('+')) return parseFactor(); // unary plus
                 if (eat('-')) {
-                    Expression x = parseFactor();
-                    return (params) -> -x.eval(params); // unary minus
+                    Expression expression = parseFactor();
+                    return (params) -> -expression.eval(params); // unary minus
                 }
 
-                Expression x = nullValue;
-                int startPos = this.pos;
+                Expression expression = nullValue;
+                int startPosition = this.position;
                 if (eat('(')) { // parentheses
-                    x = parseExpression();
+                    expression = parseExpression();
                     eat(')');
-                } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
-                    while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
-                    double res = Double.parseDouble(str.substring(startPos, this.pos));
-                    x = (params) -> res;
-                } else if (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z') { // symbols. May not start with a number or underscore
-                    while (ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z' || ch >= '0' && ch <= '9' || ch == '_')
+                } else if ((currentChar >= '0' && currentChar <= '9') || currentChar == '.') { // numbers
+                    while ((currentChar >= '0' && currentChar <= '9') || currentChar == '.')
                         nextChar();
-                    String symbolName = str.substring(startPos, this.pos);
+                    double result = Double.parseDouble(str.substring(startPosition, this.position));
+                    expression = (params) -> result;
+                } else if (Character.isLetter(currentChar) || currentChar == '_') { // symbols. May not start with a number or underscore
+                    while (Character.isLetter(currentChar) || currentChar == '_' || Character.isDigit(currentChar))
+                        nextChar();
+                    String symbolName = str.substring(startPosition, this.position);
                     if (eat('(')) {
                         switch (symbolName) {
                             case "sqrt": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.sqrt(a.eval(params));
+                                expression = (params) -> Math.sqrt(a.eval(params));
                                 break;
                             }
                             case "sin": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.sin(a.eval(params));
+                                expression = (params) -> Math.sin(a.eval(params));
                                 break;
                             }
                             case "asin": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.asin(a.eval(params));
+                                expression = (params) -> Math.asin(a.eval(params));
                                 break;
                             }
                             case "cos": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.cos(a.eval(params));
+                                expression = (params) -> Math.cos(a.eval(params));
                                 break;
                             }
                             case "acos": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.acos(a.eval(params));
+                                expression = (params) -> Math.acos(a.eval(params));
                                 break;
                             }
                             case "tan": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.tan(a.eval(params));
+                                expression = (params) -> Math.tan(a.eval(params));
                                 break;
                             }
                             case "atan": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.atan(a.eval(params));
+                                expression = (params) -> Math.atan(a.eval(params));
                                 break;
                             }
                             case "ceil": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.ceil(a.eval(params));
+                                expression = (params) -> Math.ceil(a.eval(params));
                                 break;
                             }
                             case "floor": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.floor(a.eval(params));
+                                expression = (params) -> Math.floor(a.eval(params));
                                 break;
                             }
                             case "abs": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.abs(a.eval(params));
+                                expression = (params) -> Math.abs(a.eval(params));
                                 break;
                             }
                             case "exp": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.exp(a.eval(params));
+                                expression = (params) -> Math.exp(a.eval(params));
                                 break;
                             }
                             case "log": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.log(a.eval(params));
+                                expression = (params) -> Math.log(a.eval(params));
                                 break;
                             }
                             case "round": {
                                 Expression a = parseExpression();
-                                x = (params) -> Math.round(a.eval(params));
+                                expression = (params) -> Math.round(a.eval(params));
                                 break;
                             }
                             case "min": {
@@ -219,7 +220,7 @@ public class ActionMathExpr extends Action {
                                     Expression a = parseExpression();
                                     expressionList.add(a);
                                 } while (eat(','));
-                                x = (params) -> {
+                                expression = (params) -> {
                                     double min = expressionList.get(0).eval(params);
                                     for (int i = 1; i < expressionList.size(); i++) {
                                         double v = expressionList.get(i).eval(params);
@@ -236,7 +237,7 @@ public class ActionMathExpr extends Action {
                                     Expression a = parseExpression();
                                     expressionList.add(a);
                                 } while (eat(','));
-                                x = (params) -> {
+                                expression = (params) -> {
                                     double max = expressionList.get(0).eval(params);
                                     for (int i = 1; i < expressionList.size(); i++) {
                                         double v = expressionList.get(i).eval(params);
@@ -253,60 +254,60 @@ public class ActionMathExpr extends Action {
                                     CommandItems.logger.log(Level.WARNING, "fmod requires two parameters!");
                                 Expression b = parseExpression();
 
-                                x = (params) -> a.eval(params) % b.eval(params);
+                                expression = (params) -> a.eval(params) % b.eval(params);
                                 break;
                             }
                             case "sign": {
                                 Expression a = parseExpression();
 
-                                x = (params) -> Math.signum(a.eval(params));
+                                expression = (params) -> Math.signum(a.eval(params));
                                 break;
                             }
                             case "rand":
-                                x = (params) -> Math.random();
+                                expression = (params) -> Math.random();
                                 break;
 
                             case "randn": {
                                 Random random = new Random();
-                                x = (params) -> random.nextGaussian();
+                                expression = (params) -> random.nextGaussian();
                                 break;
                             }
                             default:
-                                CommandItems.logger.log(Level.SEVERE, ("Unknown function: " + symbolName));
+                                CommandItems.logger.log(Level.SEVERE, "Unknown function: " + symbolName);
                         }
                         if (!eat(')'))
                             CommandItems.logger.log(Level.WARNING, "Failed to find closing ')'.");
                     } else {
                         // Variable
                         if ("pi".equals(symbolName))
-                            x = (params) -> Math.PI;
+                            expression = (params) -> Math.PI;
 
                         else if ("e".equals(symbolName))
-                            x = (params) -> Math.E;
+                            expression = (params) -> Math.E;
 
-                        else x = (params) -> {
+                        else expression = (params) -> {
                                 if (!params.containsKey(symbolName))
-                                    CommandItems.logger.log(Level.SEVERE, ("Tried to access undefined variable: " + symbolName));
+                                    CommandItems.logger.log(Level.SEVERE, "Tried to access undefined variable: " + symbolName);
                                 
                                 return params.get(symbolName);
                             };
                     }
                 } else {
-                    CommandItems.logger.log(Level.WARNING, ("Unexpected: " + (char) ch));
+                    CommandItems.logger.log(Level.WARNING, "Unexpected: " + (char) currentChar);
                 }
 
-                final Expression x1 = x;
+                final Expression expression1 = expression;
                 if (eat('^')) {
-                    Expression p = parseFactor();
-                    return (params) -> Math.pow(x1.eval(params), p.eval(params)); // exponentiation
+                    Expression power = parseFactor();
+                    return (params) -> Math.pow(expression1.eval(params), power.eval(params)); // exponentiation
                 }
 
                 if (eat('%')) {
-                    Expression m = parseFactor();
-                    return (params) -> x1.eval(params) % m.eval(params); // fmod
+                    Expression modulus = parseFactor();
+                    return (params) -> expression1.eval(params) % modulus.eval(params); // fmod
                 }
 
-                return x;
+                return expression;
             }
         }.parse();
     }
