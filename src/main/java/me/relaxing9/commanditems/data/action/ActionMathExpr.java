@@ -91,10 +91,9 @@ public class ActionMathExpr extends Action {
             }
 
             // Grammar:
-            // expression = term | expression `+` term | expression `-` term
-            // term = factor | term `*` factor | term `/` factor
-            // factor = `+` factor | `-` factor | `(` expression `)`
-            //        | number | functionName factor | factor `^` factor
+            // expression = term ((ADD | SUBTRACT) term)*
+            // term = factor ((MULTIPLY | DIVIDE | MODULUS) factor)*
+            // factor = (ADD | SUBTRACT)? term ((EXPONENTIATE) factor)?
 
             Expression parseExpression() {
                 Expression expression = parseTerm();
