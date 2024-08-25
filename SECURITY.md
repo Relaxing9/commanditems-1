@@ -1,3 +1,7 @@
+# Security Policy
+
+The security policy for this CommandItems fork.
+
 ## Supported Versions
 
 These versions of CommandItems are only supported in this fork of the original CommandItems.
