@@ -101,7 +101,6 @@ public class CommandItemManager implements Listener {
         return (long) Math.ceil(difference / 1000.0);
     }
 
-    @SuppressWarnings({ "deprecation", "unchecked" })
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (!isValidInteraction(event)) {
@@ -113,12 +112,11 @@ public class CommandItemManager implements Listener {
             return;
         }
 
-        ItemMeta itemMeta = item.getItemMeta();
-        if (itemMeta == null) {
+        if (!isValidItem(item)) {
             return;
         }
 
-        String commandName = new NBTItem(item).getOrCreateCompound("cmdi").getString("command");
+        String commandName = getCommandName(item);
         if (commandName == null || commandName.isEmpty()) {
             return;
         }
@@ -135,7 +133,7 @@ public class CommandItemManager implements Listener {
             return;
         }
 
-        Map<String, String> params = new NBTItem(item).getOrCreateCompound("cmdi").getObject("params", Map.class);
+        Map<String, String> params = getParams(item);
 
         if (itemDefinition.isConsumed()) {
             ItemStack contents = runConsume(event);
@@ -149,6 +147,21 @@ public class CommandItemManager implements Listener {
             event.getPlayer().sendMessage(MsgKey.ITEM_ERROR.get());
             e.printStackTrace();
         }
+    }
+
+    private boolean isValidItem(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        return itemMeta != null;
+    }
+
+    @SuppressWarnings("deprecation")
+    private String getCommandName(ItemStack item) {
+        return new NBTItem(item).getOrCreateCompound("cmdi").getString("command");
+    }
+
+    @SuppressWarnings({ "deprecation", "unchecked" })
+    private Map<String, String> getParams(ItemStack item) {
+        return new NBTItem(item).getOrCreateCompound("cmdi").getObject("params", Map.class);
     }
     
     private boolean isValidInteraction(PlayerInteractEvent event) {
