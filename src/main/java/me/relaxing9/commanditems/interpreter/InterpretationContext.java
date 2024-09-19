@@ -1,5 +1,6 @@
 package me.relaxing9.commanditems.interpreter;
 
+import java.lang.ref.Cleaner;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ import me.relaxing9.commanditems.CommandItems;
 
 /**
  * Created by Yamakaja on 26.05.18.
+ * Modified by Relaxing9 on 19.09.24.
  */
 public class InterpretationContext {
 
@@ -24,15 +26,23 @@ public class InterpretationContext {
     private Deque<InterpretationStackFrame> interpretationStack = new ArrayDeque<>();
     private CommandItems plugin;
     private Player player;
+    private static final Cleaner cleaner = Cleaner.create();
+    private final Cleaner.Cleanable cleanable;
 
     public InterpretationContext(CommandItems plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
+        cleanable = cleaner.register(this, () -> {
+            close();
+        });
     }
 
     public InterpretationContext(InterpretationContext context) {
         this.plugin = context.plugin;
         this.player = context.player;
+        cleanable = cleaner.register(this, () -> {
+            close();
+        });
 
         for (InterpretationStackFrame frame : context.interpretationStack)
             this.interpretationStack.add(frame.copy(getNewFrame()));
@@ -144,8 +154,7 @@ public class InterpretationContext {
         return new InterpretationContext(this);
     }
 
-    @Override
-    protected void finalize() {
+    protected void close() {
         release();
     }
 
@@ -156,5 +165,6 @@ public class InterpretationContext {
         }
 
         this.interpretationStack.clear();
+        this.cleanable.clean();
     }
 }
