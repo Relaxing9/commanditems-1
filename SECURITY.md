@@ -2,6 +2,10 @@
 
 The security policy for this CommandItems fork.
 
+## Minimum required Java Version
+
+11
+
 ## Supported Versions
 
 These versions of CommandItems are only supported in this fork of the original CommandItems.
