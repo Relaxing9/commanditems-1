@@ -4,9 +4,11 @@ plugins {
 }
 
 group 'me.relaxing9.commanditems'
-version '2.6.7-pre'
+version '2.6.7'
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_11
+}
 
 repositories {
     mavenCentral()
