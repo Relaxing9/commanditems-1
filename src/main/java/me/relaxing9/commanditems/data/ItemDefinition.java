@@ -1,6 +1,5 @@
 package me.relaxing9.commanditems.data;
 
-import com.jeff_media.morepersistentdatatypes.DataType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import me.relaxing9.commanditems.CommandItems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,14 +17,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
+import com.jeff_media.morepersistentdatatypes.DataType;
 
+import me.relaxing9.commanditems.CommandItems;
 import me.relaxing9.commanditems.data.action.Action;
 import me.relaxing9.commanditems.util.CMDIGlow;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 public class ItemDefinition {
 

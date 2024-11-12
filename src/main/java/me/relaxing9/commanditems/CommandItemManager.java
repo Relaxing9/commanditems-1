@@ -1,6 +1,5 @@
 package me.relaxing9.commanditems;
 
-import com.jeff_media.morepersistentdatatypes.DataType;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -13,14 +12,15 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
+import com.jeff_media.morepersistentdatatypes.DataType;
 
 import me.relaxing9.commanditems.data.ItemDefinition;
 import me.relaxing9.commanditems.util.CommandItemsI18N.MsgKey;
-import org.bukkit.persistence.PersistentDataType;
 
 public class CommandItemManager implements Listener {
 
