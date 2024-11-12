@@ -108,7 +108,7 @@ public class ItemDefinition {
 
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-            PersistentDataContainer container = stack.getItemMeta().getPersistentDataContainer();
+            PersistentDataContainer container = meta.getPersistentDataContainer();
             container.set(new NamespacedKey(plugin, "command"), PersistentDataType.STRING, key);
             container.set(new NamespacedKey(plugin, "params"), DataType.asHashMap(DataType.STRING, DataType.STRING), new HashMap<>(params));
 
