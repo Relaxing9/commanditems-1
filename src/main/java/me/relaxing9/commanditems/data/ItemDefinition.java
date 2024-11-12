@@ -75,7 +75,6 @@ public class ItemDefinition {
         @JsonProperty(defaultValue = "")
         private String skullUser;
 
-        @SuppressWarnings("deprecation")
         public ItemStack build(CommandItems plugin, String key, Map<String, String> params) {
             Preconditions.checkNotNull(this.type, "No material specified!");
 
