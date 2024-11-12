@@ -92,7 +92,6 @@ public class CommandCMDI extends BaseCommand {
 
     @Subcommand("inspect")
     @CommandPermission("cmdi.inspect")
-    @SuppressWarnings({"deprecation", "unchecked"})
     public void onInspect(Player player) {
         ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         if (itemInMainHand.getType() == Material.AIR) {
