@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Maps;
 
@@ -23,7 +22,6 @@ import co.aikar.commands.annotation.HelpCommand;
 import co.aikar.commands.annotation.Subcommand;
 import co.aikar.commands.annotation.Syntax;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.relaxing9.commanditems.data.ItemDefinition;
 import me.relaxing9.commanditems.data.action.ActionMathExpr;
 
@@ -69,7 +67,7 @@ public class CommandCMDI extends BaseCommand {
             paramMap.put(split[0], split[1]);
         }
 
-        ItemStack item = definition.getItem(paramMap);
+        ItemStack item = definition.getItem(plugin, paramMap);
 
         item.setAmount(amount);
         Map<Integer, ItemStack> leftovers = player.player.getInventory().addItem(item);
@@ -102,14 +100,13 @@ public class CommandCMDI extends BaseCommand {
             return;
         }
 
-        ItemMeta itemMeta = itemInMainHand.getItemMeta();
-        String command;
-        if (itemMeta == null || (command = new NBTItem(itemInMainHand).getOrCreateCompound("cmdi").getString("command")) == null) {
+        String command = plugin.getCommandItemManager().getCommandName(itemInMainHand);
+        if (command == null) {
             player.sendMessage(ChatColor.RED + "This is not a command item!");
             return;
         }
 
-        Map<String, String> params = new NBTItem(itemInMainHand).getOrCreateCompound("cmdi").getObject("params", Map.class);
+        Map<String, String> params = plugin.getCommandItemManager().getParams(itemInMainHand);
 
         player.sendMessage(ChatColor.AQUA + "===========================");
         player.sendMessage(ChatColor.AQUA + "  Command: " + ChatColor.GOLD + command);

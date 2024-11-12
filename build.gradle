@@ -28,8 +28,8 @@ dependencies {
 
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.17.2"
+    implementation 'com.jeff-media:MorePersistentDataTypes:2.4.0'
 
-    implementation "de.tr7zw:item-nbt-api:2.13.2"
 }
 
 shadowJar {
@@ -45,7 +45,7 @@ shadowJar {
     relocate 'org.yaml.snakeyaml', "${group}.lib.snakeyaml"
     relocate 'com.fasterxml', "${group}.lib.fasterxml"
 
-    relocate 'de.tr7zw.changeme.nbtapi', "${group}.lib.nbtapi"
+    relocate 'com.jeff_media.morepersistentdatatypes', "${group}.lib.morepersistentdatatypes"
 }
 
 task install(type: Copy) {
