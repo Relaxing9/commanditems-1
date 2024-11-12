@@ -17,3 +17,4 @@ bin/
 
 # Test environment
 testenv/
+gradle.properties
