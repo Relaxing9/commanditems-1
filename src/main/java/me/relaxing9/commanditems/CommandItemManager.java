@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,12 +12,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Table;
+import com.jeff_media.morepersistentdatatypes.DataType;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.relaxing9.commanditems.data.ItemDefinition;
 import me.relaxing9.commanditems.util.CommandItemsI18N.MsgKey;
 
@@ -154,14 +156,18 @@ public class CommandItemManager implements Listener {
         return itemMeta != null;
     }
 
-    @SuppressWarnings("deprecation")
-    private String getCommandName(ItemStack item) {
-        return new NBTItem(item).getOrCreateCompound("cmdi").getString("command");
+    public String getCommandName(ItemStack item) {
+        if (item == null) return null;
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return null;
+        return itemMeta.getPersistentDataContainer().get(new NamespacedKey(plugin, "command"), PersistentDataType.STRING);
     }
 
-    @SuppressWarnings({ "deprecation", "unchecked" })
-    private Map<String, String> getParams(ItemStack item) {
-        return new NBTItem(item).getOrCreateCompound("cmdi").getObject("params", Map.class);
+    public Map<String, String> getParams(ItemStack item) {
+        if (item == null) return null;
+        ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) return null;
+        return itemMeta.getPersistentDataContainer().get(new NamespacedKey(plugin, "params"), DataType.asHashMap(DataType.STRING, DataType.STRING));
     }
     
     private boolean isValidInteraction(PlayerInteractEvent event) {

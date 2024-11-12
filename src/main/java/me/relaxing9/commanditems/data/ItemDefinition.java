@@ -1,6 +1,7 @@
 package me.relaxing9.commanditems.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -9,17 +10,21 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Preconditions;
+import com.jeff_media.morepersistentdatatypes.DataType;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import me.relaxing9.commanditems.CommandItems;
 import me.relaxing9.commanditems.data.action.Action;
 import me.relaxing9.commanditems.util.CMDIGlow;
 
@@ -71,7 +76,7 @@ public class ItemDefinition {
         private String skullUser;
 
         @SuppressWarnings("deprecation")
-        public ItemStack build(String key, Map<String, String> params) {
+        public ItemStack build(CommandItems plugin, String key, Map<String, String> params) {
             Preconditions.checkNotNull(this.type, "No material specified!");
 
             ItemStack stack = new ItemStack(this.type, 1);
@@ -102,12 +107,12 @@ public class ItemDefinition {
             }
 
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            stack.setItemMeta(meta);
 
-            NBTItem nbti = new NBTItem(stack);
-            nbti.getOrCreateCompound("cmdi").setString("command", key);
-            nbti.getOrCreateCompound("cmdi").setObject("params", params);
-            nbti.applyNBT(stack);
+            PersistentDataContainer container = meta.getPersistentDataContainer();
+            container.set(new NamespacedKey(plugin, "command"), PersistentDataType.STRING, key);
+            container.set(new NamespacedKey(plugin, "params"), DataType.asHashMap(DataType.STRING, DataType.STRING), new HashMap<>(params));
+
+            stack.setItemMeta(meta);
 
             if (glow)
                 stack.addUnsafeEnchantment(CMDIGlow.getGlow(), 0);
@@ -153,8 +158,8 @@ public class ItemDefinition {
         return this.cooldown;
     }
 
-    public ItemStack getItem(Map<String, String> params) {
-        return this.item.build(this.key, params);
+    public ItemStack getItem(CommandItems plugin, Map<String, String> params) {
+        return this.item.build(plugin, this.key, params);
     }
 
     public Action[] getActions() {
