@@ -75,7 +75,7 @@ public class CommandCMDI extends BaseCommand {
         for (ItemStack itemStack : leftovers.values())
             player.getPlayer().getWorld().dropItem(player.getPlayer().getLocation(), itemStack);
 
-        issuer.sendMessage(ChatColor.GREEN + "Successfully gave " + player.player.getName() + " " + amount + " " + "command items!");
+            issuer.sendMessage(ChatColor.GREEN + "Successfully gave " + player.player.getName() + " " + amount + "x " + item.getItemMeta().getDisplayName() + ChatColor.GREEN + "!");
     }
 
     @Subcommand("reload")
