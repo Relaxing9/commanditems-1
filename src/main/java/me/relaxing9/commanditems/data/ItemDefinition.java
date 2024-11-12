@@ -112,6 +112,8 @@ public class ItemDefinition {
             container.set(new NamespacedKey(plugin, "command"), PersistentDataType.STRING, key);
             container.set(new NamespacedKey(plugin, "params"), DataType.asHashMap(DataType.STRING, DataType.STRING), new HashMap<>(params));
 
+            stack.setItemMeta(meta);
+
             if (glow)
                 stack.addUnsafeEnchantment(CMDIGlow.getGlow(), 0);
 
